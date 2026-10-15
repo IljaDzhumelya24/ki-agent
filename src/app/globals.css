@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f4f4f0;
+  --paper-pure: #ffffff;
+  --ink: #0b0c0c;
+  --graphite: #474a4b;
+  --mist: #dfe0dc;
+  --silver: #a9acab;
+  --line: rgba(11, 12, 12, 0.14);
+  --font-display: "Bricolage Grotesque Variable", "Arial Narrow", sans-serif;
+  --font-body: "Manrope Variable", Arial, sans-serif;
+  --radius-sm: 0.75rem;
+  --radius-md: 1.5rem;
+  --radius-pill: 999px;
+  --gutter: clamp(1rem, 3vw, 3.5rem);
+  --section-space: clamp(6rem, 12vw, 12rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  scroll-behavior: auto;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper-pure);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.display-type {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 92;
+  letter-spacing: -0.055em;
+}
+
+.page-gutter {
+  padding-inline: var(--gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
