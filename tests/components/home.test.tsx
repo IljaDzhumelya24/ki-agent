@@ -23,6 +23,11 @@ describe("SiteHeader", () => {
 
     expect(screen.getByText("PLACEHOLDER/AI")).toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(
+      screen
+        .getByRole("button", { name: "Lösungen – in Vorbereitung" })
+        .querySelector("svg"),
+    ).toBeNull();
 
     await user.click(screen.getByRole("button", { name: "Menü öffnen" }));
 

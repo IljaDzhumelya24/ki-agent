@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowDownRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowDownRight, Menu, X } from "lucide-react";
 
 import { homeContent } from "@/content/home";
 import { PreparationNotice } from "@/components/ui/preparation-notice";
@@ -63,16 +63,15 @@ export function SiteHeader() {
           </a>
 
           <nav className="absolute left-[37.5%] top-1/2 hidden -translate-y-1/2 items-center gap-9 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
-            {homeContent.navigation.map((item, index) => (
+            {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative flex items-center gap-1.5 py-2 font-mono text-[0.72rem] font-bold uppercase tracking-[0.02em] text-black transition-opacity hover:opacity-45"
+                className="group relative py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] text-black transition-opacity hover:opacity-45"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
-                {index === 0 && <ChevronDown className="size-3 stroke-[3]" aria-hidden="true" />}
                 <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-black transition-transform duration-300 group-hover:scale-x-100" />
               </button>
             ))}
