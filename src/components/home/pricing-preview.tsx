@@ -45,7 +45,7 @@ export function PricingPreview() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <MagneticLink href="#kontakt" tone="ghost">Passendes Paket finden</MagneticLink>
+          <MagneticLink href="#contact" tone="ghost">Passendes Paket finden</MagneticLink>
         </div>
       </div>
     </section>

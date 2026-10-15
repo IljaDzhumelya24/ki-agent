@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { HeroSection } from "@/components/home/hero-section";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -48,7 +48,7 @@ describe("HeroSection", () => {
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Demo starten" })).toHaveAttribute(
       "href",
-      "#kontakt",
+      "#contact",
     );
     expect(
       screen.getByRole("link", { name: "System entdecken" }),
@@ -64,32 +64,33 @@ describe("HeroSection", () => {
   });
 
   it("preserves the hero and fallback artwork when the 3D scene fails", () => {
-    const originalError = console.error;
-    console.error = () => undefined;
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
 
     function BrokenScene(): never {
       throw new Error("WebGL scene failed");
     }
 
-    render(
-      <HeroSection
-        visual={
-          <SignalCoreBoundary>
-            <BrokenScene />
-          </SignalCoreBoundary>
-        }
-      />,
-    );
+    try {
+      render(
+        <HeroSection
+          visual={
+            <SignalCoreBoundary>
+              <BrokenScene />
+            </SignalCoreBoundary>
+          }
+        />,
+      );
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: /Ein Agent/ }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Demo starten" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
-    ).toBeInTheDocument();
-
-    console.error = originalError;
+      expect(
+        screen.getByRole("heading", { level: 1, name: /Ein Agent/ }),
+      ).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Demo starten" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
+      ).toBeInTheDocument();
+    } finally {
+      errorSpy.mockRestore();
+    }
   });
 });
 

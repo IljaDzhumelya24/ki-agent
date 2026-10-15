@@ -10,6 +10,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -22,6 +23,22 @@ export function SiteHeader() {
       if (event.key === "Escape") {
         setMenuOpen(false);
         window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+      }
+      if (event.key === "Tab" && dialogRef.current) {
+        const focusable = Array.from(
+          dialogRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+          ),
+        );
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
       }
     };
     if (menuOpen) window.addEventListener("keydown", handleKeyDown);
@@ -65,7 +82,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             <a
-              href="#kontakt"
+              href="#contact"
               className="hidden min-h-10 items-center gap-3 rounded-full bg-black px-5 text-xs font-semibold text-white transition-colors hover:bg-[#292a2a] sm:flex"
             >
               Demo starten
@@ -87,6 +104,7 @@ export function SiteHeader() {
 
       {menuOpen && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label="Hauptnavigation"

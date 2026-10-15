@@ -53,7 +53,7 @@ export const homeContent = {
     title: "Ein Agent. Jeder Kanal. Keine Anfrage verloren.",
     body: "Telefon, WhatsApp, Website und Team-App greifen auf dasselbe Wissen, dieselben Werkzeuge und dieselben Regeln zu.",
     actions: [
-      { label: "Demo starten", href: "#kontakt", kind: "primary" },
+      { label: "Demo starten", href: "#contact", kind: "primary" },
       { label: "System entdecken", href: "#channels", kind: "secondary" },
     ] as const,
   },

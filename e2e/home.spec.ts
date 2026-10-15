@@ -62,6 +62,10 @@ test("complete narrative and planned navigation remain usable", async ({ page })
   const dialog = page.getByRole("dialog", { name: "Hauptnavigation" });
   await expect(dialog).toBeVisible();
   await expect(page.getByRole("button", { name: "Menü schließen" })).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(dialog.getByRole("button", { name: /Über uns.*in Vorbereitung/i })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("button", { name: "Menü schließen" })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(page.getByRole("button", { name: "Menü öffnen" })).toBeFocused();
@@ -97,6 +101,18 @@ test("complete narrative and planned navigation remain usable", async ({ page })
   ).toHaveCount(8);
   await page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("link", { name: "Demo anfragen" })).toBeVisible();
+});
+
+test("every same-page call to action resolves to an existing section", async ({ page }) => {
+  await page.goto("/");
+
+  const unresolvedTargets = await page.locator('a[href^="#"]').evaluateAll((links) =>
+    links
+      .map((link) => link.getAttribute("href"))
+      .filter((href): href is string => Boolean(href) && document.querySelector(href!) === null),
+  );
+
+  expect(unresolvedTargets).toEqual([]);
 });
 
 test("essential sales narrative remains readable without JavaScript", async ({ browser }) => {
