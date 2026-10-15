@@ -3,9 +3,12 @@ export function SignalCoreFallback() {
     <div
       role="img"
       aria-label="Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe"
-      className="relative isolate h-full w-full overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/black-hole-hero.png')" }}
+      className="relative isolate h-full w-full overflow-hidden bg-[#020304]"
     >
+      <div
+        className="absolute inset-x-0 top-[clamp(5rem,18vh,12rem)] h-full bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/black-hole-hero.png')" }}
+      />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(2,3,4,.42)_76%)]" />
     </div>
   );

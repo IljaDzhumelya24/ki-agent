@@ -16,7 +16,7 @@ test("hero centers the black hole and fills the viewport on desktop and mobile",
     page.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
   ).toBeVisible();
   await expect(page.getByTestId("signal-core-canvas")).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 1, name: "Keine Anfrage entkommt." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Der Kunde wartet nicht. Wir auch nicht." })).toBeVisible();
   const navCenter = await page.getByRole("navigation", { name: "Hauptnavigation" }).evaluate((nav) => {
     const { left, width } = nav.getBoundingClientRect();
     return left + width / 2;
@@ -32,7 +32,7 @@ test("hero centers the black hole and fills the viewport on desktop and mobile",
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
   await expect(page.locator("#top [role='img']")).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1, name: "Keine Anfrage entkommt." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Der Kunde wartet nicht. Wir auch nicht." })).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
@@ -131,7 +131,7 @@ test("essential sales narrative remains readable without JavaScript", async ({ b
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Vier Türen. Ein Gehirn." })).toBeAttached();
-  await expect(page.getByRole("heading", { level: 1, name: "Keine Anfrage entkommt." })).toBeAttached();
+  await expect(page.getByRole("heading", { level: 1, name: "Der Kunde wartet nicht. Wir auch nicht." })).toBeAttached();
   await expect(page.getByRole("heading", { name: "Gebaut für den echten Betrieb." })).toBeAttached();
   await expect(page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" })).toBeAttached();
   await expect(

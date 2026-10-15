@@ -57,13 +57,16 @@ describe("SiteHeader", () => {
 });
 
 describe("HeroSection", () => {
-  it("pairs the black-hole artwork with a memorable gravity headline", () => {
-    render(<HeroSection visual={<SignalCoreFallback />} />);
+  it("keeps the black hole clear beneath a static hero headline", () => {
+    const { container } = render(<HeroSection visual={<SignalCoreFallback />} />);
 
     expect(
       screen.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 1, name: "Keine Anfrage entkommt." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Der Kunde wartet nicht. Wir auch nicht." })).toHaveClass(
+      "hero-flow-title",
+    );
+    expect(container.querySelector(".hero-flow-stream")).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Demo starten" })).not.toBeInTheDocument();
   });
 });

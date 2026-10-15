@@ -12,17 +12,13 @@ export function HeroSection({ visual }: { visual?: ReactNode }) {
         {visual ?? <SignalCoreFallback />}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,3,4,.54)_0%,transparent_25%,rgba(2,3,4,.18)_70%,rgba(2,3,4,.52)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center px-[var(--gutter)] pt-14">
+      <div className="pointer-events-none absolute inset-x-0 top-[clamp(7rem,14.5vh,10rem)] z-10 px-[var(--gutter)]">
         <h1
-          aria-label="Keine Anfrage entkommt."
-          className="hero-gravity-title display-type max-w-[11ch] text-center text-[clamp(4.25rem,10.5vw,12rem)] font-semibold leading-[0.74] tracking-[-0.09em] text-[#f5f0e7]"
+          aria-label="Der Kunde wartet nicht. Wir auch nicht."
+          className="hero-flow-title display-type mx-auto max-w-[15ch] text-center text-[clamp(3.4rem,7.3vw,8.25rem)] font-semibold leading-[0.8] tracking-[-0.085em] text-[#f5f0e7]"
         >
-          <span className="hero-gravity-line hero-gravity-line--left" data-text="Keine Anfrage">
-            Keine Anfrage
-          </span>
-          <span className="hero-gravity-line hero-gravity-line--right" data-text="entkommt.">
-            entkommt.
-          </span>
+          <span className="block">Der Kunde wartet nicht</span>
+          <span className="block">Wir auch nicht</span>
         </h1>
       </div>
     </section>
