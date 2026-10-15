@@ -3,20 +3,14 @@ import { ArrowDown } from "lucide-react";
 
 import { homeContent } from "@/content/home";
 import { MagneticLink } from "@/components/ui/magnetic-link";
-import { SectionLabel } from "@/components/ui/section-label";
 import { SignalCoreLoader } from "@/components/three/signal-core-loader";
 import { RevealText } from "@/components/ui/reveal-text";
 
 export function HeroSection({ visual }: { visual?: ReactNode }) {
   return (
-    <section id="top" className="page-gutter editorial-grid relative isolate overflow-hidden pt-24 md:pt-28">
+    <section id="top" className="page-gutter editorial-grid relative isolate overflow-hidden pt-20 md:pt-24">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(circle_at_76%_25%,rgba(0,0,0,0.075),transparent_29%)]" />
       <div className="mx-auto max-w-[108rem]">
-        <div className="flex items-center justify-between border-y border-[var(--line)] py-3 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-black/48">
-          <SectionLabel>{homeContent.hero.eyebrow}</SectionLabel>
-          <span>Berlin / überall</span>
-        </div>
-
         <div className="relative grid min-h-[calc(100svh-11rem)] grid-cols-1 gap-7 py-7 lg:grid-cols-12 lg:gap-0 lg:py-10">
           <div className="relative z-10 flex flex-col justify-between lg:col-span-8 lg:pr-12">
             <p className="max-w-[25rem] text-xs leading-5 text-[var(--graphite)] md:text-sm md:leading-6">
