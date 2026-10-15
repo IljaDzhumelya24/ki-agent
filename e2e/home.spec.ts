@@ -18,6 +18,7 @@ test("hero stays readable and within the viewport on desktop and mobile", async 
     }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: "Demo starten" }).first()).toBeVisible();
+  await expect(page.locator("#top")).toHaveCSS("background-image", /agent-signal-hero\.png/);
   expect(
     await page.locator("#top").evaluate((hero) => Math.round(hero.getBoundingClientRect().height)),
   ).toBe(await page.evaluate(() => window.innerHeight));

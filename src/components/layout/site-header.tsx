@@ -74,7 +74,7 @@ export function SiteHeader() {
     <>
       <header
         data-scroll-state={navVisible ? "shown" : "hidden"}
-        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
       >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
@@ -87,11 +87,11 @@ export function SiteHeader() {
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] text-black transition-opacity hover:opacity-45"
+                className="group relative py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] text-current transition-opacity hover:opacity-45"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
-                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-black transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-current transition-transform duration-300 group-hover:scale-x-100" />
               </button>
             ))}
           </nav>
