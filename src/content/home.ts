@@ -46,7 +46,6 @@ export const homeContent = {
     { label: "Branchen", href: "/branchen", status: "planned" },
     { label: "Technologie", href: "/technologie", status: "planned" },
     { label: "Preise", href: "/preise", status: "planned" },
-    { label: "Über uns", href: "/ueber-uns", status: "planned" },
   ] satisfies NavigationItem[],
   hero: {
     eyebrow: "KI-Agenten für lokale Betriebe",

@@ -33,7 +33,8 @@ describe("SiteHeader", () => {
 
     const dialog = screen.getByRole("dialog", { name: "Hauptnavigation" });
     expect(dialog).toBeInTheDocument();
-    expect(within(dialog).getAllByRole("button", { name: /in Vorbereitung/i })).toHaveLength(5);
+    expect(within(dialog).getAllByRole("button", { name: /in Vorbereitung/i })).toHaveLength(4);
+    expect(screen.queryByRole("button", { name: "Über uns – in Vorbereitung" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Lösungen" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Menü schließen" }));
