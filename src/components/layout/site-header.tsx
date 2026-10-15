@@ -62,13 +62,13 @@ export function SiteHeader() {
             <span className="display-type text-[1.55rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>
           </a>
 
-          <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
+          <nav className="hidden items-center gap-9 xl:gap-12 lg:flex" aria-label="Hauptnavigation">
             {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 font-mono text-[0.62rem] font-bold uppercase tracking-[0.07em] text-black transition-opacity hover:opacity-45"
+                className="group relative py-2 font-mono text-[0.75rem] font-bold uppercase tracking-[0.04em] text-black transition-opacity hover:opacity-45"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
