@@ -19,6 +19,9 @@ test("hero stays readable and within the viewport on desktop and mobile", async 
   ).toBeVisible();
   await expect(page.getByRole("link", { name: "Demo starten" }).first()).toBeVisible();
   expect(
+    await page.locator("#top").evaluate((hero) => Math.round(hero.getBoundingClientRect().height)),
+  ).toBe(await page.evaluate(() => window.innerHeight));
+  expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
 

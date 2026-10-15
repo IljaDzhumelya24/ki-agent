@@ -8,17 +8,17 @@ import { RevealText } from "@/components/ui/reveal-text";
 
 export function HeroSection({ visual }: { visual?: ReactNode }) {
   return (
-    <section id="top" className="page-gutter editorial-grid relative isolate overflow-hidden pt-20 md:pt-24">
+    <section id="top" className="page-gutter editorial-grid relative isolate min-h-[100svh] overflow-hidden pt-20 md:pt-24 lg:h-[100svh] lg:min-h-0">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(circle_at_76%_25%,rgba(0,0,0,0.075),transparent_29%)]" />
-      <div className="mx-auto max-w-[108rem]">
-        <div className="relative grid min-h-[calc(100svh-11rem)] grid-cols-1 gap-7 py-7 lg:grid-cols-12 lg:gap-0 lg:py-10">
+      <div className="mx-auto max-w-[108rem] lg:flex lg:min-h-0 lg:h-full lg:flex-col">
+        <div className="relative grid min-h-[calc(100svh-11rem)] grid-cols-1 gap-7 py-7 lg:min-h-0 lg:flex-1 lg:grid-cols-12 lg:gap-0 lg:py-6">
           <div className="relative z-10 flex flex-col justify-between lg:col-span-8 lg:pr-12">
             <p className="max-w-[25rem] text-xs leading-5 text-[var(--graphite)] md:text-sm md:leading-6">
               KI-Infrastruktur für Betriebe, die erreichbar sein wollen, auch wenn niemand am Bildschirm sitzt.
             </p>
           <h1
             aria-label={homeContent.hero.title}
-            className="display-type relative z-10 mt-14 max-w-[11ch] text-[clamp(4.3rem,10.1vw,12.4rem)] leading-[0.77] font-medium tracking-[-0.075em] lg:mt-0"
+            className="display-type relative z-10 mt-14 max-w-[11ch] text-[clamp(3.8rem,7.1vw,9rem)] leading-[0.77] font-medium tracking-[-0.075em] lg:mt-0"
           >
             <RevealText>Ein Agent.</RevealText>
             <RevealText className="text-black/35">Jeder Kanal.</RevealText>
@@ -52,7 +52,7 @@ export function HeroSection({ visual }: { visual?: ReactNode }) {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-[108rem] flex-col border-t border-[var(--line)] py-4 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto flex max-w-[108rem] shrink-0 flex-col border-t border-[var(--line)] py-4 md:flex-row md:items-center md:justify-between">
         <div className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
           {homeContent.channels.map((channel) => (
             <div key={channel.id} className="flex items-center gap-2.5">
