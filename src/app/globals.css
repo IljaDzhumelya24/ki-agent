@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f4f4f0;
+  --paper: #f2f2ee;
   --paper-pure: #ffffff;
   --ink: #0b0c0c;
   --graphite: #474a4b;
@@ -57,6 +57,33 @@ button {
   font-family: var(--font-display);
   font-variation-settings: "wdth" 92;
   letter-spacing: -0.055em;
+}
+
+.editorial-grid::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: linear-gradient(90deg, transparent calc(50% - 1px), rgba(11, 12, 12, 0.08) 50%, transparent calc(50% + 1px));
+  content: "";
+}
+
+/* The index sections intentionally stay square and architectural, so the 3D
+   pieces read as exhibition objects instead of generic SaaS illustrations. */
+.industry-card {
+  border-radius: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  .editorial-grid::after {
+    position: absolute;
+    inset: 0 16.666%;
+    z-index: -1;
+    pointer-events: none;
+    border-inline: 1px solid rgba(11, 12, 12, 0.08);
+    content: "";
+  }
 }
 
 .page-gutter {

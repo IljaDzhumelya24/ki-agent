@@ -19,7 +19,7 @@ export function CapabilitySection() {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-px overflow-hidden rounded-[2rem] border border-black/10 bg-black/10 lg:grid-cols-2">
+        <div className="mt-10 grid gap-px overflow-hidden border border-black/10 bg-black/10 lg:grid-cols-2">
           <div className="bg-[#e6e6e1] p-7 md:p-10">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-black/45">FAQ-Bot</span>

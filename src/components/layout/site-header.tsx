@@ -56,22 +56,22 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
-        <div className="mx-auto flex max-w-[96rem] items-center justify-between rounded-[1.1rem] border border-black/10 bg-[rgba(244,244,240,0.78)] px-4 py-3 shadow-[0_12px_50px_rgba(0,0,0,0.06)] backdrop-blur-xl md:px-5">
+      <header className="fixed inset-x-0 top-0 z-50 bg-[rgba(244,244,240,0.93)] px-4 backdrop-blur-md md:px-[var(--gutter)]">
+        <div className="mx-auto flex max-w-[108rem] items-center justify-between border-b border-black/12 py-4 md:py-5">
           <a href="#top" className="flex items-center gap-2.5" aria-label="Zur Startseite">
-            <span className="grid size-8 place-items-center rounded-full bg-black text-white">
+            <span className="grid size-7 place-items-center rounded-full bg-black text-white">
               <span className="size-2 rounded-full border border-white" />
             </span>
-            <span className="font-mono text-[0.68rem] font-bold tracking-[-0.02em]">PLACEHOLDER/AI</span>
+            <span className="font-mono text-[0.65rem] font-bold tracking-[0.02em]">PLACEHOLDER/AI</span>
           </a>
 
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Hauptnavigation">
+          <nav className="hidden items-center gap-6 lg:flex" aria-label="Hauptnavigation">
             {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 text-xs font-semibold text-black/70 transition-colors hover:text-black"
+                className="group relative py-2 font-mono text-[0.58rem] uppercase tracking-[0.13em] text-black/65 transition-colors hover:text-black"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
@@ -83,7 +83,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="hidden min-h-10 items-center gap-3 rounded-full bg-black px-5 text-xs font-semibold text-white transition-colors hover:bg-[#292a2a] sm:flex"
+              className="hidden min-h-9 items-center gap-3 bg-black px-4 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#292a2a] sm:flex"
             >
               Demo starten
               <span className="size-1.5 rounded-full bg-white" aria-hidden="true" />
@@ -92,7 +92,7 @@ export function SiteHeader() {
               ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="grid size-10 place-items-center rounded-full border border-black/15 bg-white/70 lg:hidden"
+              className="grid size-9 place-items-center border border-black/15 bg-white/70 lg:hidden"
               aria-label="Menü öffnen"
               aria-expanded={menuOpen}
             >

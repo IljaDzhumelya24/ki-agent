@@ -22,7 +22,7 @@ export function PricingPreview() {
               key={pack.name}
               aria-label={`${pack.name} Paket`}
               data-scroll-reveal
-              className={`flex min-h-[37rem] flex-col rounded-[1.8rem] border p-6 md:p-8 ${pack.featured ? "border-black bg-black text-white lg:-translate-y-7" : "border-black/10 bg-[var(--paper)]"}`}
+              className={`flex min-h-[37rem] flex-col border p-6 md:p-8 ${pack.featured ? "border-black bg-black text-white lg:-translate-y-7" : "border-black/10 bg-[var(--paper)]"}`}
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] opacity-52">{pack.name}</span>
