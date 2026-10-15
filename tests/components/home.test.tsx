@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { HeroSection } from "@/components/home/hero-section";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SignalCoreFallback } from "@/components/three/signal-core-fallback";
+import { SignalCoreBoundary } from "@/components/three/signal-core-loader";
 
 describe("SiteHeader", () => {
   it("opens and closes an accessible menu without exposing broken future links", async () => {
@@ -51,5 +52,34 @@ describe("HeroSection", () => {
     expect(
       screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
     ).toBeInTheDocument();
+  });
+
+  it("preserves the hero and fallback artwork when the 3D scene fails", () => {
+    const originalError = console.error;
+    console.error = () => undefined;
+
+    function BrokenScene(): never {
+      throw new Error("WebGL scene failed");
+    }
+
+    render(
+      <HeroSection
+        visual={
+          <SignalCoreBoundary>
+            <BrokenScene />
+          </SignalCoreBoundary>
+        }
+      />,
+    );
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Ein Agent/ }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Demo starten" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
+    ).toBeInTheDocument();
+
+    console.error = originalError;
   });
 });

@@ -4,7 +4,8 @@ import { ArrowDown } from "lucide-react";
 import { homeContent } from "@/content/home";
 import { MagneticLink } from "@/components/ui/magnetic-link";
 import { SectionLabel } from "@/components/ui/section-label";
-import { SignalCoreFallback } from "@/components/three/signal-core-fallback";
+import { SignalCoreLoader } from "@/components/three/signal-core-loader";
+import { RevealText } from "@/components/ui/reveal-text";
 
 export function HeroSection({ visual }: { visual?: ReactNode }) {
   return (
@@ -17,9 +18,9 @@ export function HeroSection({ visual }: { visual?: ReactNode }) {
             aria-label={homeContent.hero.title}
             className="display-type mt-6 max-w-[13ch] text-[clamp(4rem,8.4vw,9.4rem)] leading-[0.81] font-medium"
           >
-            <span className="block">Ein Agent.</span>
-            <span className="block text-black/48">Jeder Kanal.</span>
-            <span className="block">Keine Anfrage verloren.</span>
+            <RevealText>Ein Agent.</RevealText>
+            <RevealText className="text-black/48">Jeder Kanal.</RevealText>
+            <RevealText>Keine Anfrage verloren.</RevealText>
           </h1>
           <div className="mt-8 grid w-full gap-8 border-t border-[var(--line)] pt-5 sm:grid-cols-[1fr_auto] sm:items-end lg:max-w-[46rem]">
             <p className="max-w-[38rem] text-sm leading-7 text-[var(--graphite)] md:text-base">
@@ -40,7 +41,7 @@ export function HeroSection({ visual }: { visual?: ReactNode }) {
         </div>
 
         <div className="relative -mx-8 min-h-[24rem] lg:-ml-20 lg:mr-0 lg:min-h-[42rem]">
-          <div className="absolute inset-0 grid place-items-center">{visual ?? <SignalCoreFallback />}</div>
+          <div className="absolute inset-0 grid place-items-center">{visual ?? <SignalCoreLoader />}</div>
         </div>
       </div>
 
