@@ -132,6 +132,118 @@ body {
   animation: nav-label-lensing 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.hero-gravity-title {
+  isolation: isolate;
+  text-shadow:
+    0 0 24px rgba(0, 0, 0, 0.92),
+    0 9px 42px rgba(0, 0, 0, 0.68);
+}
+
+.hero-gravity-line {
+  position: relative;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  will-change: transform, filter;
+}
+
+.hero-gravity-line::after {
+  position: absolute;
+  inset: 0;
+  content: attr(data-text);
+  color: #e8d7bd;
+  opacity: 0;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.hero-gravity-line--left {
+  transform-origin: right center;
+  animation: hero-gravity-draw-left 8.8s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+.hero-gravity-line--right {
+  transform-origin: left center;
+  animation: hero-gravity-draw-right 8.8s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+.hero-gravity-line--left::after {
+  animation: hero-gravity-trail-left 8.8s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+.hero-gravity-line--right::after {
+  animation: hero-gravity-trail-right 8.8s cubic-bezier(0.45, 0, 0.15, 1) infinite;
+}
+
+@keyframes hero-gravity-draw-left {
+  0%,
+  57%,
+  100% {
+    transform: translateX(0) scaleX(1) skewX(0deg);
+    filter: blur(0);
+  }
+  72% {
+    transform: translateX(0.075em) scaleX(0.945) skewX(1.6deg);
+    filter: blur(0.35px);
+  }
+  84% {
+    transform: translateX(0.025em) scaleX(0.985) skewX(0.45deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-gravity-draw-right {
+  0%,
+  57%,
+  100% {
+    transform: translateX(0) scaleX(1) skewX(0deg);
+    filter: blur(0);
+  }
+  72% {
+    transform: translateX(-0.075em) scaleX(0.945) skewX(-1.6deg);
+    filter: blur(0.35px);
+  }
+  84% {
+    transform: translateX(-0.025em) scaleX(0.985) skewX(-0.45deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-gravity-trail-left {
+  0%,
+  59%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+  72% {
+    opacity: 0.32;
+    transform: translateX(0.56em) scaleX(0.74);
+  }
+  85% {
+    opacity: 0;
+    transform: translateX(0.18em) scaleX(0.93);
+  }
+}
+
+@keyframes hero-gravity-trail-right {
+  0%,
+  59%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+  72% {
+    opacity: 0.32;
+    transform: translateX(-0.56em) scaleX(0.74);
+  }
+  85% {
+    opacity: 0;
+    transform: translateX(-0.18em) scaleX(0.93);
+  }
+}
+
 a,
 button {
   -webkit-tap-highlight-color: transparent;

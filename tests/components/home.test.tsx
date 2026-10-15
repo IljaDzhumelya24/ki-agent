@@ -57,13 +57,13 @@ describe("SiteHeader", () => {
 });
 
 describe("HeroSection", () => {
-  it("keeps the header free of sales copy and centers the fallback artwork", () => {
+  it("pairs the black-hole artwork with a memorable gravity headline", () => {
     render(<HeroSection visual={<SignalCoreFallback />} />);
 
     expect(
       screen.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Keine Anfrage entkommt." })).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Demo starten" })).not.toBeInTheDocument();
   });
 });
