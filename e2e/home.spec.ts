@@ -17,6 +17,11 @@ test("hero centers the black hole and fills the viewport on desktop and mobile",
   ).toBeVisible();
   await expect(page.getByTestId("signal-core-canvas")).toHaveCount(0);
   await expect(page.locator("#top h1")).toHaveCount(0);
+  const navCenter = await page.getByRole("navigation", { name: "Hauptnavigation" }).evaluate((nav) => {
+    const { left, width } = nav.getBoundingClientRect();
+    return left + width / 2;
+  });
+  expect(Math.round(navCenter)).toBe(Math.round(await page.evaluate(() => window.innerWidth / 2)));
   expect(
     await page.locator("#top").evaluate((hero) => Math.round(hero.getBoundingClientRect().height)),
   ).toBe(await page.evaluate(() => window.innerHeight));

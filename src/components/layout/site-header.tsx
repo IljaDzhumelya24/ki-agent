@@ -81,7 +81,7 @@ export function SiteHeader() {
             <span className="display-type text-[1.7rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>
           </a>
 
-          <nav className="absolute left-[37.5%] top-1/2 hidden -translate-y-1/2 items-center gap-9 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
+          <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-9 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
             {homeContent.navigation.map((item) => (
               <button
                 type="button"
