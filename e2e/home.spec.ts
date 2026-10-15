@@ -48,3 +48,42 @@ test("WebGL absence renders intentional fallback artwork", async ({ page }) => {
     page.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
   ).toBeVisible();
 });
+
+test("complete narrative and planned navigation remain usable", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Menü öffnen" }).click();
+  const dialog = page.getByRole("dialog", { name: "Hauptnavigation" });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: /Lösungen.*in Vorbereitung/i }).click();
+  await expect(page.getByRole("status")).toContainText("Lösungen ist in Vorbereitung");
+  await expect(page).toHaveURL(/\/$/);
+
+  await page.keyboard.press("Escape");
+  await page.keyboard.press("Tab");
+  expect(
+    await page.evaluate(() => {
+      const active = document.activeElement;
+      return active instanceof HTMLElement && getComputedStyle(active).outlineStyle !== "none";
+    }),
+  ).toBe(true);
+
+  for (const heading of [
+    "Vier Türen. Ein Gehirn.",
+    "Kein Bot. Ein System, das handelt.",
+    "Gebaut für den echten Betrieb.",
+    "Wert, der sich messen lässt.",
+    "Von der ersten Frage bis zum Go-live.",
+    "Ein Einstieg, der mitwächst.",
+    "Bereit, keinen Anruf mehr zu verlieren?",
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeAttached();
+  }
+
+  await expect(
+    page.getByRole("button", { name: /Branchen-Seite in Vorbereitung/i }),
+  ).toHaveCount(8);
+  await page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" }).scrollIntoViewIfNeeded();
+  await expect(page.getByRole("link", { name: "Demo anfragen" })).toBeVisible();
+});
