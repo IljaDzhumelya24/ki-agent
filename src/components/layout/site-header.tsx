@@ -9,8 +9,10 @@ import { PreparationNotice } from "@/components/ui/preparation-notice";
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
+  const [navVisible, setNavVisible] = useState(true);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef(0);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -19,6 +21,8 @@ export function SiteHeader() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    lastScrollYRef.current = window.scrollY;
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
@@ -41,11 +45,23 @@ export function SiteHeader() {
         }
       }
     };
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingUp = currentScrollY < lastScrollYRef.current;
+
+      if (!menuOpen) {
+        setNavVisible(scrollingUp || currentScrollY < 24);
+      }
+      lastScrollYRef.current = currentScrollY;
+    };
+
     if (menuOpen) window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [menuOpen]);
 
@@ -56,7 +72,10 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-6 pt-4">
+      <header
+        data-scroll-state={navVisible ? "shown" : "hidden"}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
+      >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
             <span className="display-type text-[1.7rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>

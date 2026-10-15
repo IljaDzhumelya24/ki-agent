@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -38,6 +38,21 @@ describe("SiteHeader", () => {
 
     await user.click(screen.getByRole("button", { name: "Menü schließen" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("hides while scrolling down and returns when scrolling up", () => {
+    render(<SiteHeader />);
+
+    const header = screen.getByRole("banner");
+    expect(header).toHaveAttribute("data-scroll-state", "shown");
+
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 180 });
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute("data-scroll-state", "hidden");
+
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 96 });
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute("data-scroll-state", "shown");
   });
 });
 
