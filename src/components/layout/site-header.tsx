@@ -56,26 +56,23 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-[rgba(244,244,240,0.93)] px-4 backdrop-blur-md md:px-[var(--gutter)]">
-        <div className="mx-auto flex max-w-[108rem] items-center justify-between border-b border-black/12 py-4 md:py-5">
-          <a href="#top" className="flex items-center gap-2.5" aria-label="Zur Startseite">
-            <span className="grid size-7 place-items-center rounded-full bg-black text-white">
-              <span className="size-2 rounded-full border border-white" />
-            </span>
-            <span className="font-mono text-[0.65rem] font-bold tracking-[0.02em]">PLACEHOLDER/AI</span>
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-[var(--gutter)] md:pt-5">
+        <div className="mx-auto flex max-w-[108rem] items-center justify-between py-2">
+          <a href="#top" className="group" aria-label="Zur Startseite">
+            <span className="display-type text-[1.55rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>
           </a>
 
-          <nav className="hidden items-center gap-6 lg:flex" aria-label="Hauptnavigation">
+          <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
             {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 font-mono text-[0.58rem] uppercase tracking-[0.13em] text-black/65 transition-colors hover:text-black"
+                className="group relative py-2 font-mono text-[0.62rem] font-bold uppercase tracking-[0.07em] text-black transition-opacity hover:opacity-45"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
-                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-black transition-transform group-hover:scale-x-100" />
+                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-black transition-transform duration-300 group-hover:scale-x-100" />
               </button>
             ))}
           </nav>
@@ -83,7 +80,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="hidden min-h-9 items-center gap-3 bg-black px-4 font-mono text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#292a2a] sm:flex"
+              className="hidden min-h-10 items-center gap-3 border border-black bg-transparent px-5 font-mono text-[0.62rem] font-bold uppercase tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white sm:flex"
             >
               Demo starten
               <span className="size-1.5 rounded-full bg-white" aria-hidden="true" />
@@ -92,7 +89,7 @@ export function SiteHeader() {
               ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="grid size-9 place-items-center border border-black/15 bg-white/70 lg:hidden"
+              className="grid size-10 place-items-center border border-black bg-transparent transition-colors hover:bg-black hover:text-white lg:hidden"
               aria-label="Menü öffnen"
               aria-expanded={menuOpen}
             >
