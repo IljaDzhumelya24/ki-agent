@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowDownRight, Menu, X } from "lucide-react";
+import { ArrowDownRight, ChevronDown, Menu, X } from "lucide-react";
 
 import { homeContent } from "@/content/home";
 import { PreparationNotice } from "@/components/ui/preparation-notice";
@@ -56,40 +56,40 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-[var(--gutter)] md:pt-5">
-        <div className="mx-auto flex max-w-[108rem] items-center justify-between py-2">
-          <a href="#top" className="group" aria-label="Zur Startseite">
-            <span className="display-type text-[1.55rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>
+      <header className="fixed inset-x-0 top-0 z-50 px-6 pt-4">
+        <div className="relative h-10 w-full">
+          <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
+            <span className="display-type text-[1.7rem] font-semibold leading-none tracking-[-0.075em] transition-opacity group-hover:opacity-55">PLACEHOLDER/AI</span>
           </a>
 
-          <nav className="hidden items-center gap-9 xl:gap-12 lg:flex" aria-label="Hauptnavigation">
-            {homeContent.navigation.map((item) => (
+          <nav className="absolute left-[37.5%] top-1/2 hidden -translate-y-1/2 items-center gap-9 xl:gap-10 lg:flex" aria-label="Hauptnavigation">
+            {homeContent.navigation.map((item, index) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 font-mono text-[0.75rem] font-bold uppercase tracking-[0.04em] text-black transition-opacity hover:opacity-45"
+                className="group relative flex items-center gap-1.5 py-2 font-mono text-[0.72rem] font-bold uppercase tracking-[0.02em] text-black transition-opacity hover:opacity-45"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
                 {item.label}
+                {index === 0 && <ChevronDown className="size-3 stroke-[3]" aria-hidden="true" />}
                 <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-black transition-transform duration-300 group-hover:scale-x-100" />
               </button>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-2">
             <a
               href="#contact"
-              className="hidden min-h-10 items-center gap-3 border border-black bg-transparent px-5 font-mono text-[0.62rem] font-bold uppercase tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white sm:flex"
+              className="hidden h-10 w-[9.35rem] items-center justify-center bg-white font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-colors hover:bg-black hover:text-white sm:flex"
             >
               Demo starten
-              <span className="size-1.5 rounded-full bg-white" aria-hidden="true" />
             </a>
             <button
               ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="grid size-10 place-items-center border border-black bg-transparent transition-colors hover:bg-black hover:text-white lg:hidden"
+              className="grid size-10 place-items-center border border-black bg-white text-black transition-colors hover:bg-black hover:text-white lg:hidden"
               aria-label="Menü öffnen"
               aria-expanded={menuOpen}
             >
