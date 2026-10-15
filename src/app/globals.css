@@ -8,6 +8,9 @@
   --mist: #dfe0dc;
   --silver: #a9acab;
   --line: rgba(11, 12, 12, 0.14);
+  --scroll-track: #070808;
+  --scroll-thumb: #8f9392;
+  --scroll-thumb-hover: #f2f2ee;
   --font-display: "Bricolage Grotesque Variable", "Arial Narrow", sans-serif;
   --font-body: "Manrope Variable", Arial, sans-serif;
   --radius-sm: 0.75rem;
@@ -25,7 +28,7 @@ html {
   background: var(--paper);
   color: var(--ink);
   scroll-behavior: auto;
-  scrollbar-color: var(--ink) transparent;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
   scrollbar-width: thin;
 }
 
@@ -46,21 +49,21 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 0.7rem;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 3px solid var(--paper);
+  border: 2px solid var(--scroll-track);
   border-radius: 999px;
-  background: var(--ink);
+  background: var(--scroll-thumb);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--graphite);
+  background: var(--scroll-thumb-hover);
 }
 
 a,

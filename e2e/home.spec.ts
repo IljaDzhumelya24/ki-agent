@@ -140,8 +140,11 @@ test("essential sales narrative remains readable without JavaScript", async ({ b
   await context.close();
 });
 
-test("uses a restrained thin scrollbar", async ({ page }) => {
+test("uses a slim dark scrollbar", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("html")).toHaveCSS("scrollbar-width", "thin");
+  expect(
+    await page.evaluate(() => getComputedStyle(document.documentElement, "::-webkit-scrollbar").width),
+  ).toBe("8px");
 });
