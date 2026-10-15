@@ -22,7 +22,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "three": "latest"
+    "three": "0.182.0"
   },
   "devDependencies": {
     "@playwright/test": "latest",
@@ -33,7 +33,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@types/three": "latest",
+    "@types/three": "0.182.0",
     "@vitejs/plugin-react": "latest",
     "jsdom": "latest",
     "tailwindcss": "latest",

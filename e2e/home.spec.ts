@@ -2,8 +2,12 @@ import { expect, test } from "@playwright/test";
 
 test("hero stays readable and within the viewport on desktop and mobile", async ({ page }) => {
   const errors: string[] = [];
+  const relevantWarnings: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
+    if (message.type() === "warning" && /deprecated|WebGL|hydration/i.test(message.text())) {
+      relevantWarnings.push(message.text());
+    }
   });
 
   await page.goto("/");
@@ -25,6 +29,7 @@ test("hero stays readable and within the viewport on desktop and mobile", async 
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
   expect(errors).toEqual([]);
+  expect(relevantWarnings).toEqual([]);
 });
 
 test("reduced motion reveals the complete hero without scrubbed animation", async ({ page }) => {
@@ -56,6 +61,12 @@ test("complete narrative and planned navigation remain usable", async ({ page })
   await page.getByRole("button", { name: "Menü öffnen" }).click();
   const dialog = page.getByRole("dialog", { name: "Hauptnavigation" });
   await expect(dialog).toBeVisible();
+  await expect(page.getByRole("button", { name: "Menü schließen" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole("button", { name: "Menü öffnen" })).toBeFocused();
+
+  await page.getByRole("button", { name: "Menü öffnen" }).click();
   await dialog.getByRole("button", { name: /Lösungen.*in Vorbereitung/i }).click();
   await expect(page.getByRole("status")).toContainText("Lösungen ist in Vorbereitung");
   await expect(page).toHaveURL(/\/$/);
@@ -86,4 +97,20 @@ test("complete narrative and planned navigation remain usable", async ({ page })
   ).toHaveCount(8);
   await page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" }).scrollIntoViewIfNeeded();
   await expect(page.getByRole("link", { name: "Demo anfragen" })).toBeVisible();
+});
+
+test("essential sales narrative remains readable without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("/");
+
+  await expect(page.getByRole("heading", { name: /Ein Agent/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Vier Türen. Ein Gehirn." })).toBeAttached();
+  await expect(page.getByRole("heading", { name: "Gebaut für den echten Betrieb." })).toBeAttached();
+  await expect(page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" })).toBeAttached();
+  await expect(
+    page.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
+  ).toBeVisible();
+
+  await context.close();
 });

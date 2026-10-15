@@ -16,3 +16,7 @@ export function resolveMotionMode({
   if (!hasFinePointer) return "lite";
   return "full";
 }
+
+export function shouldAnimateScrollReveals(mode: MotionMode) {
+  return mode === "full";
+}

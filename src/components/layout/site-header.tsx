@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowDownRight, Menu, X } from "lucide-react";
 
 import { homeContent } from "@/content/home";
@@ -9,11 +9,26 @@ import { PreparationNotice } from "@/components/ui/preparation-notice";
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  function closeMenu() {
+    setMenuOpen(false);
+    window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+  }
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+      }
+    };
+    if (menuOpen) window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [menuOpen]);
 
@@ -57,6 +72,7 @@ export function SiteHeader() {
               <span className="size-1.5 rounded-full bg-white" aria-hidden="true" />
             </a>
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen(true)}
               className="grid size-10 place-items-center rounded-full border border-black/15 bg-white/70 lg:hidden"
@@ -80,7 +96,8 @@ export function SiteHeader() {
             <span className="font-mono text-[0.68rem] font-bold">PLACEHOLDER/AI</span>
             <button
               type="button"
-              onClick={() => setMenuOpen(false)}
+              autoFocus
+              onClick={closeMenu}
               aria-label="Menü schließen"
               className="grid size-11 place-items-center rounded-full border border-white/20 hover:bg-white hover:text-black"
             >

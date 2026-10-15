@@ -28,7 +28,7 @@ export function IndustryExplorer() {
               onClick={() => setPlannedLabel(industry.name)}
               aria-label={`${industry.name}: Branchen-Seite in Vorbereitung`}
               data-scroll-reveal
-              className="industry-card group flex min-h-[28rem] flex-col rounded-[1.6rem] border border-black/10 bg-[var(--paper)] p-5 text-left transition-[transform,background-color,color] duration-500 hover:-translate-y-2 hover:bg-black hover:text-white focus-visible:-translate-y-2 focus-visible:bg-black focus-visible:text-white"
+              className="industry-card group flex min-h-[24rem] flex-col rounded-[1.6rem] border border-black/10 bg-[var(--paper)] p-5 text-left transition-[transform,background-color,color] duration-500 hover:-translate-y-2 hover:bg-black hover:text-white focus-visible:-translate-y-2 focus-visible:bg-black focus-visible:text-white md:min-h-[28rem]"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[0.6rem] text-current opacity-45">{industry.index}</span>

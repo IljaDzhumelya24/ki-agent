@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { useMotionMode } from "@/hooks/use-motion-mode";
+import { shouldAnimateScrollReveals } from "@/lib/motion";
 
 export function HomeMotion() {
   const mode = useMotionMode();
@@ -42,23 +43,25 @@ export function HomeMotion() {
         },
       );
 
-      gsap.utils.toArray<HTMLElement>("[data-scroll-reveal]").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 64, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 86%",
-              once: true,
+      if (shouldAnimateScrollReveals(mode)) {
+        gsap.utils.toArray<HTMLElement>("[data-scroll-reveal]").forEach((element) => {
+          gsap.fromTo(
+            element,
+            { y: 64, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: element,
+                start: "top 86%",
+                once: true,
+              },
             },
-          },
-        );
-      });
+          );
+        });
+      }
     });
 
     return () => {

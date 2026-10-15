@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { resolveMotionMode } from "@/lib/motion";
+import { resolveMotionMode, shouldAnimateScrollReveals } from "@/lib/motion";
 
 describe("resolveMotionMode", () => {
   it("honours reduced-motion before every other capability", () => {
@@ -41,5 +41,14 @@ describe("resolveMotionMode", () => {
         hasWebGL: true,
       }),
     ).toBe("full");
+  });
+});
+
+describe("shouldAnimateScrollReveals", () => {
+  it("keeps scroll-hidden content exclusive to the full motion experience", () => {
+    expect(shouldAnimateScrollReveals("full")).toBe(true);
+    expect(shouldAnimateScrollReveals("lite")).toBe(false);
+    expect(shouldAnimateScrollReveals("reduced")).toBe(false);
+    expect(shouldAnimateScrollReveals("fallback")).toBe(false);
   });
 });
