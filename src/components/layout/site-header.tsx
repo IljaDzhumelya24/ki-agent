@@ -6,6 +6,61 @@ import { ArrowDownRight, Menu, X } from "lucide-react";
 import { homeContent } from "@/content/home";
 import { PreparationNotice } from "@/components/ui/preparation-notice";
 
+const scrambleAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function ScrambleLabel({ label, restingTone = "light" }: { label: string; restingTone?: "light" | "dark" }) {
+  const [value, setValue] = useState(label);
+  const [isRewriting, setIsRewriting] = useState(false);
+  const frameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+    };
+  }, []);
+
+  function rewrite() {
+    if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
+
+    const startedAt = window.performance.now();
+    setIsRewriting(true);
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / 420, 1);
+      const revealed = Math.floor(progress * label.length);
+      setValue(
+        label
+          .split("")
+          .map((character, index) => {
+            if (character === " " || index < revealed) return character;
+            return scrambleAlphabet[Math.floor(Math.random() * scrambleAlphabet.length)];
+          })
+          .join(""),
+      );
+
+      if (progress < 1) {
+        frameRef.current = window.requestAnimationFrame(tick);
+      } else {
+        setValue(label);
+        setIsRewriting(false);
+        frameRef.current = null;
+      }
+    };
+
+    frameRef.current = window.requestAnimationFrame(tick);
+  }
+
+  return (
+    <span
+      onPointerEnter={rewrite}
+      onFocus={rewrite}
+      className={`relative z-10 whitespace-nowrap ${isRewriting ? "nav-label-glow" : restingTone === "dark" ? "text-black" : "text-white group-hover:text-black"}`}
+    >
+      {value}
+    </span>
+  );
+}
+
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
@@ -87,11 +142,10 @@ export function SiteHeader() {
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] text-current transition-opacity hover:opacity-45"
+                className="group relative isolate overflow-hidden border border-transparent px-3 py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] transition-[background-color,border-color,transform] duration-300 hover:border-white hover:bg-white hover:shadow-[0_0_24px_rgba(114,190,255,.26)] focus-visible:border-white focus-visible:bg-white"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
-                {item.label}
-                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-current transition-transform duration-300 group-hover:scale-x-100" />
+                <ScrambleLabel label={item.label} />
               </button>
             ))}
           </nav>
@@ -99,9 +153,9 @@ export function SiteHeader() {
           <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-2">
             <a
               href="#contact"
-              className="hidden h-10 w-[9.35rem] items-center justify-center bg-white font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-colors hover:bg-black hover:text-white sm:flex"
+              className="group hidden h-10 w-[9.35rem] items-center justify-center border border-white bg-white font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] transition-[box-shadow,transform] duration-300 hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:shadow-[0_0_26px_rgba(114,190,255,.35)] sm:flex"
             >
-              Demo starten
+              <ScrambleLabel label="Demo starten" restingTone="dark" />
             </a>
             <button
               ref={menuButtonRef}

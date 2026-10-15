@@ -148,3 +148,12 @@ test("uses a slim dark scrollbar", async ({ page }) => {
     await page.evaluate(() => getComputedStyle(document.documentElement, "::-webkit-scrollbar").width),
   ).toBe("8px");
 });
+
+test("desktop navigation reveals a bright interaction surface on hover", async ({ page }) => {
+  await page.goto("/");
+
+  const solution = page.getByRole("button", { name: "Lösungen – in Vorbereitung" });
+  await solution.hover();
+
+  await expect(solution).toHaveCSS("background-color", "rgb(255, 255, 255)");
+});
