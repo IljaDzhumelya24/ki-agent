@@ -25,6 +25,8 @@ html {
   background: var(--paper);
   color: var(--ink);
   scroll-behavior: auto;
+  scrollbar-color: var(--ink) transparent;
+  scrollbar-width: thin;
 }
 
 body {
@@ -41,6 +43,24 @@ body {
 ::selection {
   background: var(--ink);
   color: var(--paper-pure);
+}
+
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--paper);
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--graphite);
 }
 
 a,
