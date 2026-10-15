@@ -90,7 +90,7 @@ export function SiteHeader() {
                 className="group relative isolate overflow-hidden border border-transparent px-3 py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] transition-[background-color,border-color,transform] duration-300 hover:border-white hover:bg-white hover:shadow-[0_0_24px_rgba(114,190,255,.26)] focus-visible:border-white focus-visible:bg-white"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
-                <span className="nav-label relative z-10 whitespace-nowrap text-white group-hover:text-black">
+                <span data-label={item.label} className="nav-label relative z-10 whitespace-nowrap text-white group-hover:text-black">
                   {item.label}
                 </span>
               </button>
@@ -102,7 +102,7 @@ export function SiteHeader() {
               href="#contact"
               className="group hidden h-10 w-[9.35rem] items-center justify-center border border-white bg-white font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] transition-[box-shadow,transform] duration-300 hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:shadow-[0_0_26px_rgba(114,190,255,.35)] sm:flex"
             >
-              <span className="nav-label relative z-10 whitespace-nowrap text-black">Demo starten</span>
+              <span data-label="Demo starten" className="nav-label relative z-10 whitespace-nowrap text-black">Demo starten</span>
             </a>
             <button
               ref={menuButtonRef}

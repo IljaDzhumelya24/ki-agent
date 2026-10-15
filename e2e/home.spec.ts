@@ -156,5 +156,5 @@ test("desktop navigation reveals a bright interaction surface on hover", async (
   await solution.hover();
 
   await expect(solution).toHaveCSS("background-color", "rgb(255, 255, 255)");
-  await expect(solution.locator("span")).toHaveCSS("animation-name", "nav-label-refraction");
+  await expect(solution.locator("span")).toHaveCSS("animation-name", "nav-label-orbit");
 });
