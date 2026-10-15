@@ -1,24 +1,22 @@
 import { expect, test } from "@playwright/test";
 
-test("hero stays readable and within the viewport on desktop and mobile", async ({ page }) => {
+test("hero centers the black hole and fills the viewport on desktop and mobile", async ({ page }) => {
   const errors: string[] = [];
   const relevantWarnings: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text());
-    if (message.type() === "warning" && /deprecated|WebGL|hydration/i.test(message.text())) {
+    const isChromiumReadbackDiagnostic = /GL Driver Message.*GPU stall due to ReadPixels/i.test(message.text());
+    if (message.type() === "warning" && !isChromiumReadbackDiagnostic && /deprecated|WebGL|hydration/i.test(message.text())) {
       relevantWarnings.push(message.text());
     }
   });
 
   await page.goto("/");
   await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "Ein Agent. Jeder Kanal. Keine Anfrage verloren.",
-    }),
+    page.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Demo starten" }).first()).toBeVisible();
-  await expect(page.locator("#top")).toHaveCSS("background-image", /agent-signal-hero\.png/);
+  await expect(page.getByTestId("signal-core-canvas")).toHaveCount(0);
+  await expect(page.locator("#top h1")).toHaveCount(0);
   expect(
     await page.locator("#top").evaluate((hero) => Math.round(hero.getBoundingClientRect().height)),
   ).toBe(await page.evaluate(() => window.innerHeight));
@@ -28,7 +26,8 @@ test("hero stays readable and within the viewport on desktop and mobile", async 
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: /Ein Agent/ })).toBeVisible();
+  await expect(page.locator("#top [role='img']")).toBeVisible();
+  await expect(page.locator("#top h1")).toHaveCount(0);
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).toBe(true);
@@ -36,11 +35,13 @@ test("hero stays readable and within the viewport on desktop and mobile", async 
   expect(relevantWarnings).toEqual([]);
 });
 
-test("reduced motion reveals the complete hero without scrubbed animation", async ({ page }) => {
+test("reduced motion keeps the black-hole fallback visible", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /Keine Anfrage verloren/ })).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
+  ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
 });
 
@@ -54,7 +55,7 @@ test("WebGL absence renders intentional fallback artwork", async ({ page }) => {
   await page.goto("/");
 
   await expect(
-    page.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
+    page.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
   ).toBeVisible();
 });
 
@@ -67,7 +68,7 @@ test("complete narrative and planned navigation remain usable", async ({ page })
   await expect(dialog).toBeVisible();
   await expect(page.getByRole("button", { name: "Menü schließen" })).toBeFocused();
   await page.keyboard.press("Shift+Tab");
-  await expect(dialog.getByRole("button", { name: /Über uns.*in Vorbereitung/i })).toBeFocused();
+  await expect(dialog.getByRole("button", { name: /Preise.*in Vorbereitung/i })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(page.getByRole("button", { name: "Menü schließen" })).toBeFocused();
   await page.keyboard.press("Escape");
@@ -124,12 +125,11 @@ test("essential sales narrative remains readable without JavaScript", async ({ b
   const page = await context.newPage();
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /Ein Agent/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Vier Türen. Ein Gehirn." })).toBeAttached();
   await expect(page.getByRole("heading", { name: "Gebaut für den echten Betrieb." })).toBeAttached();
   await expect(page.getByRole("heading", { name: "Bereit, keinen Anruf mehr zu verlieren?" })).toBeAttached();
   await expect(
-    page.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
+    page.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
   ).toBeVisible();
 
   await context.close();

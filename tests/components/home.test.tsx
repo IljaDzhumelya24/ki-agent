@@ -1,11 +1,10 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { HeroSection } from "@/components/home/hero-section";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SignalCoreFallback } from "@/components/three/signal-core-fallback";
-import { SignalCoreBoundary } from "@/components/three/signal-core-loader";
 import { ChannelStory } from "@/components/home/channel-story";
 import { CapabilitySection } from "@/components/home/capability-section";
 import { IndustryExplorer } from "@/components/home/industry-explorer";
@@ -58,60 +57,14 @@ describe("SiteHeader", () => {
 });
 
 describe("HeroSection", () => {
-  it("keeps the promise, actions, channels, and fallback artwork visible", () => {
+  it("keeps the header free of sales copy and centers the fallback artwork", () => {
     render(<HeroSection visual={<SignalCoreFallback />} />);
 
     expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Ein Agent. Jeder Kanal. Keine Anfrage verloren.",
-      }),
+      screen.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Demo starten" })).toHaveAttribute(
-      "href",
-      "#contact",
-    );
-    expect(
-      screen.getByRole("link", { name: "System entdecken" }),
-    ).toHaveAttribute("href", "#channels");
-
-    for (const channel of ["Telefon", "WhatsApp", "Website-Chat", "Team-App"]) {
-      expect(screen.getByText(channel)).toBeInTheDocument();
-    }
-
-    expect(
-      screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
-    ).toBeInTheDocument();
-  });
-
-  it("preserves the hero and fallback artwork when the 3D scene fails", () => {
-    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
-
-    function BrokenScene(): never {
-      throw new Error("WebGL scene failed");
-    }
-
-    try {
-      render(
-        <HeroSection
-          visual={
-            <SignalCoreBoundary>
-              <BrokenScene />
-            </SignalCoreBoundary>
-          }
-        />,
-      );
-
-      expect(
-        screen.getByRole("heading", { level: 1, name: /Ein Agent/ }),
-      ).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: "Demo starten" })).toBeInTheDocument();
-      expect(
-        screen.getByRole("img", { name: "Abstrakter KI-Agent mit vier verbundenen Kanälen" }),
-      ).toBeInTheDocument();
-    } finally {
-      errorSpy.mockRestore();
-    }
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Demo starten" })).not.toBeInTheDocument();
   });
 });
 
