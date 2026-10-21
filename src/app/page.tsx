@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/home/hero-section";
+import { EntryIntro } from "@/components/home/entry-intro";
 import { HomeMotion } from "@/components/home/home-motion";
 import { ChannelStory } from "@/components/home/channel-story";
 import { CapabilitySection } from "@/components/home/capability-section";
@@ -13,6 +14,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 export default function HomePage() {
   return (
     <>
+      <EntryIntro />
       <HomeMotion />
       <SiteHeader />
       <main>

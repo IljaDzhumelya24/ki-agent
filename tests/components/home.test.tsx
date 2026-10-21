@@ -63,7 +63,7 @@ describe("HeroSection", () => {
     expect(
       screen.getByRole("img", { name: "Statische Darstellung eines schwarzen Lochs mit Akkretionsscheibe" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 1, name: "Der Kunde wartet nicht. Wir auch nicht." })).toHaveClass(
+    expect(screen.getByRole("heading", { level: 1, name: "KI, die zuhört, versteht und handelt." })).toHaveClass(
       "hero-flow-title",
     );
     expect(container.querySelector(".hero-flow-stream")).not.toBeInTheDocument();
@@ -86,8 +86,9 @@ describe("homepage narrative", () => {
       </>,
     );
 
+    expect(screen.getByRole("heading", { name: "Ein Kunde meldet sich." })).toBeInTheDocument();
+
     for (const heading of [
-      "Vier Türen. Ein Gehirn.",
       "Kein Bot. Ein System, das handelt.",
       "Gebaut für den echten Betrieb.",
       "Wert, der sich messen lässt.",

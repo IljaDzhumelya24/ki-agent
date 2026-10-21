@@ -8,9 +8,9 @@
   --mist: #dfe0dc;
   --silver: #a9acab;
   --line: rgba(11, 12, 12, 0.14);
-  --scroll-track: #070808;
-  --scroll-thumb: #8f9392;
-  --scroll-thumb-hover: #f2f2ee;
+  --scroll-track: transparent;
+  --scroll-thumb: rgba(255, 255, 255, 0.2);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.46);
   --font-display: "Bricolage Grotesque Variable", "Arial Narrow", sans-serif;
   --font-body: "Manrope Variable", Arial, sans-serif;
   --radius-sm: 0.75rem;
@@ -28,8 +28,7 @@ html {
   background: var(--paper);
   color: var(--ink);
   scroll-behavior: auto;
-  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 body {
@@ -49,7 +48,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
 ::-webkit-scrollbar-track {
@@ -57,9 +56,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 2px solid var(--scroll-track);
+  border: 2px solid transparent;
   border-radius: 999px;
   background: var(--scroll-thumb);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -135,9 +136,117 @@ body {
 .hero-flow-title {
   position: relative;
   z-index: 1;
+  font-family: var(--font-body);
+  font-variation-settings: "wght" 570;
+  letter-spacing: -0.082em;
+  color: #f6f5f1;
   text-shadow:
     0 0 24px rgba(0, 0, 0, 0.92),
     0 9px 42px rgba(0, 0, 0, 0.68);
+}
+
+.entry-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  padding: clamp(1.25rem, 2.4vw, 3rem);
+  overflow: hidden;
+  background: #020304;
+  color: #f6f5f1;
+  transition: transform 500ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.entry-intro--leaving {
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.entry-intro__brand {
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  font-family: var(--font-body);
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+  font-weight: 650;
+  letter-spacing: -0.075em;
+  animation: entry-brand-in 780ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.entry-intro__index {
+  align-self: end;
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  opacity: 0.62;
+}
+
+.entry-intro__signal {
+  position: absolute;
+  right: clamp(1.25rem, 2.4vw, 3rem);
+  bottom: clamp(1.25rem, 2.4vw, 3rem);
+  left: clamp(1.25rem, 2.4vw, 3rem);
+  height: 1px;
+  overflow: hidden;
+  background: rgba(246, 245, 241, 0.16);
+}
+
+.entry-intro__signal > span {
+  display: block;
+  width: 32%;
+  height: 100%;
+  background: #f6f5f1;
+  animation: entry-signal 1.2s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@keyframes entry-brand-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entry-signal {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
+
+.hero-void-cinema {
+  animation: hero-void-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+
+.hero-thread-out {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: clamp(6rem, 17vh, 13rem);
+  background: linear-gradient(to bottom, transparent, rgba(248, 247, 242, 0.72));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+@keyframes hero-void-drift {
+  from {
+    transform: scale(1.01) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.055) translate3d(-0.35%, 0.45%, 0);
+  }
 }
 
 a,
@@ -239,6 +348,924 @@ button {
     0 0 120px rgba(255, 255, 255, 0.08);
   opacity: 0.78;
 }
+
+.signal-story {
+  position: relative;
+  background: var(--paper);
+  color: #f5f4ef;
+}
+
+.signal-scene {
+  position: relative;
+  height: 100svh;
+  min-height: 40.7rem;
+  overflow: hidden;
+  background: #020304;
+  isolation: isolate;
+}
+
+.signal-trace {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  fill: none;
+  mix-blend-mode: difference;
+}
+
+.signal-trace--mobile {
+  display: none;
+}
+
+.signal-trace-path {
+  stroke: rgba(247, 246, 240, 0.88);
+  stroke-width: 1.3;
+  vector-effect: non-scaling-stroke;
+}
+
+.signal-light-wipe {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: var(--paper);
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+.signal-chapters {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  width: min(44%, 38rem);
+}
+
+.signal-chapter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.signal-chapter:not(:first-child) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.signal-step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.69rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.64;
+}
+
+.signal-step-label i {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.signal-chapter h2 {
+  max-width: 16ch;
+  margin-top: clamp(1.2rem, 2vw, 2rem);
+  font-size: clamp(2.9rem, 4.5vw, 5.8rem);
+  font-weight: 560;
+  line-height: 1.02;
+  letter-spacing: -0.065em;
+}
+
+.signal-chapter p {
+  max-width: 29rem;
+  margin-top: clamp(1.4rem, 2.2vw, 2.2rem);
+  font-size: clamp(0.98rem, 1.18vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(245, 244, 239, 0.72);
+}
+
+.signal-chapter-meta {
+  display: flex;
+  width: min(100%, 29rem);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(2.2rem, 4vw, 4rem);
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(245, 244, 239, 0.3);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.035em;
+}
+
+.signal-chapter-meta span {
+  opacity: 0.5;
+}
+
+.signal-chapter-meta strong {
+  font-weight: 600;
+  text-align: right;
+}
+
+.signal-chapter:last-child {
+  color: #111413;
+}
+
+.signal-chapter:last-child p {
+  color: #505754;
+}
+
+.signal-chapter:last-child .signal-chapter-meta {
+  border-color: rgba(17, 20, 19, 0.3);
+}
+
+.signal-device-stage {
+  position: absolute;
+  z-index: 5;
+  top: 51%;
+  right: clamp(9rem, 14vw, 17rem);
+  perspective: 1400px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.signal-device-motion {
+  transform-style: preserve-3d;
+}
+
+.signal-phone {
+  width: min(30vw, 45svh, 25rem);
+  aspect-ratio: 0.502;
+  padding: 4px;
+  border: 1px solid rgba(250, 250, 248, 0.38);
+  border-radius: 3.2rem;
+  background: linear-gradient(110deg, #3a3c3d 0%, #d2d2cf 18%, #535556 38%, #1a1c1d 61%, #858785 88%, #272929 100%);
+  box-shadow:
+    -1.8rem 2.4rem 3.8rem rgba(0, 0, 0, 0.65),
+    -0.25rem 0 1.8rem rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  transform-style: preserve-3d;
+}
+
+.signal-phone-rim {
+  width: 100%;
+  height: 100%;
+  padding: 7px;
+  border-radius: 2.95rem;
+  background: #080909;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.signal-phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2.45rem;
+  background: #f0f0ed;
+  color: #101212;
+}
+
+.signal-phone-status {
+  position: relative;
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.signal-phone-island {
+  position: absolute;
+  top: 0.28rem;
+  left: 50%;
+  width: 5.8rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: #0a0b0b;
+  transform: translateX(-50%);
+}
+
+.signal-phone-header {
+  display: flex;
+  height: 3.9rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.1rem 0.5rem;
+  border-bottom: 1px solid rgba(17, 19, 19, 0.11);
+}
+
+.signal-phone-back {
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.signal-phone-avatar {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: #111313;
+  color: white;
+  font-size: 0.63rem;
+  font-weight: 750;
+  letter-spacing: -0.05em;
+}
+
+.signal-phone-identity {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.signal-phone-identity strong {
+  font-size: 0.79rem;
+  font-weight: 750;
+}
+
+.signal-phone-identity small {
+  color: #737775;
+  font-size: 0.6rem;
+}
+
+.signal-phone-more {
+  align-self: flex-start;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.signal-screen {
+  position: absolute;
+  inset: 6.4rem 0 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.signal-screen:not(.signal-screen--first) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.signal-screen-label {
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.5;
+  color: #777b79;
+}
+
+.signal-message {
+  max-width: 94%;
+  margin-top: 1.3rem;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid rgba(18, 21, 21, 0.1);
+  border-radius: 1.25rem 1.25rem 1.25rem 0.2rem;
+  background: #fff;
+  font-size: clamp(0.95rem, 1.28vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1.38;
+  letter-spacing: -0.045em;
+}
+
+.signal-message--agent {
+  align-self: flex-end;
+  border-color: #171919;
+  border-radius: 1.25rem 1.25rem 0.2rem 1.25rem;
+  background: #171919;
+  color: #f7f7f3;
+  font-size: clamp(0.87rem, 1.12vw, 1.05rem);
+}
+
+.signal-message-time {
+  margin-top: 0.45rem;
+  color: #858a87;
+  font-size: 0.52rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+}
+
+.signal-message-time--right {
+  align-self: flex-end;
+}
+
+.signal-phone-context {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: auto;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(18, 21, 21, 0.12);
+  border-radius: 0.85rem;
+  background: #e7e8e4;
+}
+
+.signal-phone-context-kicker {
+  color: #707774;
+  font-size: 0.55rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+}
+
+.signal-phone-context > span:not(:first-child) {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.signal-phone-context > span > i {
+  width: 0.38rem;
+  height: 0.38rem;
+  flex: none;
+  border-radius: 50%;
+  background: #303734;
+}
+
+.signal-phone-activity {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding: 0.9rem 0;
+  border-top: 1px solid rgba(18, 21, 21, 0.15);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.signal-phone-activity i {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #3b4240;
+}
+
+.signal-phone-activity--done {
+  margin-top: auto;
+}
+
+.signal-understood {
+  margin-top: 2rem;
+  font-size: clamp(2.6rem, 3.1vw, 3.7rem);
+  font-weight: 620;
+  line-height: 0.99;
+  letter-spacing: -0.075em;
+}
+
+.signal-understood em {
+  font-style: normal;
+  color: #9a9c98;
+}
+
+.signal-insight-card {
+  margin-top: 2rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(18, 21, 21, 0.12);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+
+.signal-insight-card > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding-top: 0.8rem;
+  font-size: 0.75rem;
+}
+
+.signal-insight-card > div:first-of-type {
+  margin-top: 0.55rem;
+  border-top: 1px solid rgba(18, 21, 21, 0.1);
+}
+
+.signal-insight-card > div > span {
+  color: #858a87;
+}
+
+.signal-insight-card strong {
+  font-weight: 750;
+  text-align: right;
+}
+
+.signal-slot-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.7rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 0.85rem;
+  background: #151817;
+  color: #f5f5f1;
+}
+
+.signal-slot-card > span,
+.signal-slot-card > i {
+  font-size: 0.53rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.signal-slot-card strong {
+  margin: 0.45rem 0;
+  font-size: clamp(2.8rem, 4.1vw, 4.7rem);
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: -0.09em;
+}
+
+.signal-slot-card strong small {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.signal-slot-card > i {
+  color: #adb7b1;
+}
+
+.signal-confirmation {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.8rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(18, 21, 21, 0.2);
+  border-bottom: 1px solid rgba(18, 21, 21, 0.2);
+}
+
+.signal-confirmation span,
+.signal-confirmation small {
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.signal-confirmation strong {
+  margin: 0.25rem 0;
+  font-size: clamp(3.8rem, 5.7vw, 6.8rem);
+  font-weight: 540;
+  line-height: 1;
+  letter-spacing: -0.105em;
+}
+
+.signal-handoff-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1.3rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(18, 21, 21, 0.12);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+
+.signal-handoff-card span {
+  color: #777d79;
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.signal-handoff-card strong {
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.045em;
+}
+
+.signal-handoff-card small {
+  color: #767c79;
+  font-size: 0.66rem;
+}
+
+.signal-phone-home {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  width: 5rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: #171919;
+  transform: translateX(-50%);
+}
+
+.signal-progress {
+  position: absolute;
+  z-index: 6;
+  top: 34%;
+  right: var(--gutter);
+  display: flex;
+  width: 5.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.signal-progress-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.51rem;
+  opacity: 0.7;
+}
+
+.signal-progress-heading > span {
+  font-size: 0.75rem;
+  opacity: 1;
+}
+
+.signal-progress-track {
+  width: 1px;
+  height: min(24vh, 13rem);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.signal-progress-track > span {
+  display: block;
+  width: 3px;
+  height: 100%;
+  background: #f5f4ef;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.signal-progress-count {
+  opacity: 0.72;
+}
+
+@media (max-width: 767px) {
+  .hero-thread-out {
+    height: 5rem;
+  }
+
+  .signal-trace--desktop {
+    display: none;
+  }
+
+  .signal-trace--mobile {
+    display: block;
+  }
+
+  .signal-chapters {
+    top: 4rem;
+    bottom: auto;
+    right: var(--gutter);
+    width: auto;
+    height: 15rem;
+  }
+
+  .signal-chapter {
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .signal-step-label {
+    font-size: 0.57rem;
+  }
+
+  .signal-chapter h2 {
+    margin-top: 0.8rem;
+    font-size: clamp(2.15rem, 8vw, 3.25rem);
+    line-height: 1.02;
+  }
+
+  .signal-chapter p {
+    max-width: 26rem;
+    margin-top: 0.85rem;
+    font-size: 0.93rem;
+    line-height: 1.48;
+  }
+
+  .signal-chapter-meta {
+    gap: 0.75rem;
+    margin-top: 1.4rem;
+    padding-top: 0.65rem;
+    font-size: 0.53rem;
+  }
+
+  .signal-device-stage {
+    top: calc(68% - 1.5rem);
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  .signal-phone {
+    width: min(65vw, 16rem);
+    border-radius: 2.2rem;
+  }
+
+  .signal-phone-rim {
+    padding: 4px;
+    border-radius: 2rem;
+  }
+
+  .signal-phone-screen {
+    border-radius: 1.75rem;
+  }
+
+  .signal-phone-status {
+    height: 1.8rem;
+    padding: 0 0.7rem;
+    font-size: 0.43rem;
+  }
+
+  .signal-phone-island {
+    width: 3.8rem;
+    height: 0.8rem;
+  }
+
+  .signal-phone-header {
+    height: 2.5rem;
+    gap: 0.3rem;
+    padding: 0 0.5rem 0.3rem;
+  }
+
+  .signal-phone-back {
+    font-size: 1.2rem;
+  }
+
+  .signal-phone-avatar {
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 0.43rem;
+  }
+
+  .signal-phone-identity strong {
+    font-size: 0.55rem;
+  }
+
+  .signal-phone-identity small {
+    font-size: 0.43rem;
+  }
+
+  .signal-phone-more {
+    font-size: 0.7rem;
+  }
+
+  .signal-screen {
+    inset: 4.3rem 0 0;
+    padding: 1rem 0.65rem 1.7rem;
+  }
+
+  .signal-screen-label,
+  .signal-phone-activity,
+  .signal-confirmation span,
+  .signal-confirmation small {
+    font-size: 0.42rem;
+  }
+
+  .signal-message,
+  .signal-message--agent {
+    margin-top: 0.65rem;
+    padding: 0.7rem;
+    border-radius: 0.8rem;
+    font-size: 0.74rem;
+  }
+
+  .signal-message-time {
+    margin-top: 0.28rem;
+    font-size: 0.4rem;
+  }
+
+  .signal-phone-context {
+    gap: 0.38rem;
+    padding: 0.65rem 0.7rem;
+  }
+
+  .signal-phone-context-kicker,
+  .signal-handoff-card span,
+  .signal-slot-card > span,
+  .signal-slot-card > i {
+    font-size: 0.42rem;
+  }
+
+  .signal-phone-context > span:not(:first-child) {
+    gap: 0.45rem;
+    font-size: 0.62rem;
+  }
+
+  .signal-understood {
+    font-size: 2rem;
+  }
+
+  .signal-insight-card {
+    margin-top: 1.1rem;
+    padding: 0.7rem;
+  }
+
+  .signal-insight-card > div {
+    padding-top: 0.52rem;
+    font-size: 0.58rem;
+  }
+
+  .signal-slot-card {
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+  }
+
+  .signal-slot-card strong {
+    font-size: 2.7rem;
+  }
+
+  .signal-slot-card strong small {
+    font-size: 0.55rem;
+  }
+
+  .signal-confirmation {
+    margin-top: 1rem;
+    padding: 0.7rem 0;
+  }
+
+  .signal-confirmation strong {
+    font-size: 3.5rem;
+  }
+
+  .signal-handoff-card {
+    gap: 0.3rem;
+    margin-top: 0.8rem;
+    padding: 0.7rem;
+  }
+
+  .signal-handoff-card strong {
+    font-size: 0.78rem;
+  }
+
+  .signal-handoff-card small {
+    font-size: 0.51rem;
+  }
+
+  .signal-progress {
+    top: auto;
+    right: var(--gutter);
+    bottom: 1rem;
+    left: 4.5rem;
+    width: auto;
+    flex-direction: row;
+    gap: 0.85rem;
+    font-size: 0.54rem;
+  }
+
+  .signal-progress-heading {
+    flex-direction: row;
+  }
+
+  .signal-progress-heading > span {
+    font-size: 0.58rem;
+  }
+
+  .signal-progress-track {
+    width: auto;
+    height: 1px;
+    flex: 1;
+  }
+
+  .signal-progress-track > span {
+    width: 100%;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+}
+
+@media (max-width: 350px) and (min-height: 651px) {
+  .signal-chapter p {
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+
+  .signal-chapter-meta {
+    display: none;
+  }
+
+  .signal-phone {
+    width: 62vw;
+  }
+
+  .signal-screen {
+    padding-top: 0.65rem;
+  }
+
+  .signal-message,
+  .signal-message--agent {
+    margin-top: 0.45rem;
+    padding: 0.55rem;
+    font-size: 0.66rem;
+  }
+
+  .signal-screen--first .signal-phone-context,
+  .signal-screen--second .signal-phone-activity,
+  .signal-screen--third .signal-phone-activity {
+    display: none;
+  }
+
+  .signal-understood {
+    margin-top: 0.7rem;
+    font-size: 1.7rem;
+  }
+
+  .signal-insight-card {
+    margin-top: 0.65rem;
+    padding: 0.55rem;
+  }
+
+  .signal-insight-card > div {
+    padding-top: 0.35rem;
+    font-size: 0.52rem;
+  }
+
+  .signal-slot-card {
+    padding: 0.55rem;
+  }
+
+  .signal-slot-card strong {
+    font-size: 2.15rem;
+  }
+
+  .signal-confirmation {
+    margin-top: 0.55rem;
+    padding: 0.4rem 0;
+  }
+
+  .signal-confirmation strong {
+    font-size: 2.7rem;
+  }
+
+  .signal-handoff-card {
+    margin-top: 0.55rem;
+    padding: 0.55rem;
+  }
+}
+
+@media (max-height: 650px), (prefers-reduced-motion: reduce) {
+  .signal-scene {
+    height: auto;
+    min-height: 0;
+    padding: 2rem var(--gutter) 4rem;
+  }
+
+  .signal-trace,
+  .signal-progress,
+  .signal-light-wipe {
+    display: none;
+  }
+
+  .signal-chapters {
+    position: relative;
+    inset: auto;
+    width: auto;
+    height: auto;
+  }
+
+  .signal-chapter,
+  .signal-chapter:not(:first-child) {
+    position: relative;
+    min-height: 16rem;
+    padding: 4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .signal-chapter:last-child {
+    color: #f5f4ef;
+  }
+
+  .signal-chapter:last-child p {
+    color: rgba(245, 244, 239, 0.72);
+  }
+
+  .signal-device-stage {
+    position: relative;
+    inset: auto;
+    width: fit-content;
+    margin: 3rem auto 0;
+    transform: none;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   *,

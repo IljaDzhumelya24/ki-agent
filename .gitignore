@@ -1,4 +1,6 @@
 node_modules/
+node_modules.repair-backup/
+node_modules.repair-backup-2/
 .next/
 coverage/
 playwright-report/
