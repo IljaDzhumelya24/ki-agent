@@ -89,6 +89,30 @@ body {
   display: inline-block;
 }
 
+@keyframes capability-reveal {
+  from { opacity: 0; transform: translateY(1rem); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes capability-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.capability-active-content {
+  animation: capability-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.capability-step-progress {
+  transform-origin: left;
+  animation: capability-progress 4600ms linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capability-active-content,
+  .capability-step-progress { animation: none; }
+}
+
 .nav-label::after {
   position: absolute;
   inset: 0;

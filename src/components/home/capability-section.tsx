@@ -1,63 +1,86 @@
-const operations = [
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+const stages = [
   {
-    number: "01",
-    title: "Anfrage aufnehmen",
-    detail: "Telefon, WhatsApp oder Website – der Kontakt geht nicht verloren.",
+    title: "Verstehen.",
+    detail: "Aus einer freien Nachricht werden Anliegen, Zeitwunsch und die Details, die wirklich zählen.",
   },
   {
-    number: "02",
-    title: "Kontext prüfen",
-    detail: "Anliegen, Betriebswissen, Regeln und Verfügbarkeit greifen ineinander.",
+    title: "Abgleichen.",
+    detail: "Der Agent berücksichtigt dein Wissen, deine Regeln und die Verfügbarkeit in bestehenden Systemen.",
   },
   {
-    number: "03",
-    title: "Schritt auslösen",
-    detail: "Buchen, dokumentieren oder mit allen Details an dein Team übergeben.",
+    title: "Handeln.",
+    detail: "Er bestätigt einen Schritt, dokumentiert ihn oder übergibt mit dem gesamten Kontext an dein Team.",
   },
 ];
 
 export function CapabilitySection() {
+  const [activeStage, setActiveStage] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !('IntersectionObserver' in window)) {
+      setIsInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting), { threshold: 0.35 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setActiveStage((current) => (current + 1) % stages.length), 4600);
+    return () => window.clearTimeout(timer);
+  }, [activeStage, isInView]);
+
   return (
-    <section id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-12 text-[var(--ink)] md:pb-32 md:pt-20">
-      <div className="mx-auto grid max-w-[96rem] border-y border-black/15 lg:grid-cols-[0.88fr_1.12fr]">
-        <div className="flex flex-col justify-between py-10 lg:py-16 lg:pr-20">
-          <div>
-            <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-black/45">02 / Hinter der Antwort</span>
-            <h2 className="display-type mt-10 max-w-[11ch] text-[clamp(3.7rem,6.2vw,7.2rem)] leading-[0.92] font-medium tracking-[-0.07em]">
-              Die Antwort ist nicht das Ergebnis.
-            </h2>
-          </div>
-          <div className="mt-14 max-w-md">
-            <p className="text-base leading-8 text-[var(--graphite)]">
-              Ein Agent wird erst dann wertvoll, wenn aus einer Anfrage ein sinnvoller nächster Schritt wird – innerhalb deiner Regeln und in den Systemen, die dein Betrieb bereits nutzt.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-x-5 gap-y-2 border-t border-black/15 pt-5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-black/50">
-              <span>Kalender</span><span>CRM / Kasse</span><span>Team</span>
-            </div>
-          </div>
+    <section ref={sectionRef} id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-12 text-[var(--ink)] md:pb-32 md:pt-20">
+      <div className="mx-auto grid max-w-[96rem] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:gap-0">
+        <div className="flex flex-col justify-between lg:pr-20 lg:py-10">
+          <h2 className="display-type max-w-[10ch] text-[clamp(3.7rem,6vw,7rem)] leading-[0.93] font-medium tracking-[-0.07em]">
+            Die Antwort war erst der Anfang.
+          </h2>
+          <p className="mt-10 max-w-md border-t border-black/20 pt-6 text-base leading-8 text-[var(--graphite)] lg:mt-16">
+            Dein Agent hört nicht bei einer Nachricht auf. Er versteht das Anliegen, gleicht es mit deinem Betrieb ab und führt freigegebene Schritte aus. Wenn etwas unklar ist, übernimmt dein Team mit dem gesamten Kontext.
+          </p>
         </div>
 
-        <div className="relative isolate flex flex-col overflow-hidden bg-[#101111] px-7 py-8 text-[#f4f3ef] md:px-10 md:py-10 lg:px-14">
-          <div className="flex items-center justify-between border-b border-white/20 pb-6 font-mono text-[0.65rem] uppercase tracking-[0.17em] text-white/50">
-            <span>Ein verbundener Ablauf</span>
-            <span className="flex items-center gap-2"><i className="size-1.5 rounded-full bg-white" /> System bereit</span>
+        <div className="flex min-h-[35rem] flex-col justify-between overflow-hidden bg-[#101111] px-7 py-9 text-[#f4f3ef] md:px-12 md:py-12 lg:px-14">
+          <div className="flex items-center justify-between border-b border-white/20 pb-6">
+            <span className="display-type text-xl tracking-[-0.04em]">So wird aus Kontakt Handlung.</span>
+            <span className="size-2 rounded-full bg-white/85" aria-hidden="true" />
           </div>
 
-          <div className="flex-1">
-            {operations.map((operation) => (
-              <div key={operation.number} className="grid grid-cols-[2.6rem_1fr] gap-5 border-b border-white/15 py-7 md:py-9">
-                <span className="pt-1 font-mono text-[0.65rem] text-white/40">{operation.number}</span>
-                <div>
-                  <h3 className="display-type text-[clamp(2rem,3vw,3.3rem)] leading-none tracking-[-0.055em]">{operation.title}</h3>
-                  <p className="mt-3 max-w-md text-sm leading-6 text-white/55">{operation.detail}</p>
-                </div>
-              </div>
+          <div key={activeStage} className="capability-active-content py-14">
+            <h3 className="display-type text-[clamp(3rem,6.4vw,7.5rem)] leading-[0.85] tracking-[-0.075em]">
+              {stages[activeStage].title}
+            </h3>
+            <p className="mt-10 max-w-md text-base leading-7 text-white/65">
+              {stages[activeStage].detail}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 border-t border-white/20 pt-6" aria-label="Schritte des Agenten">
+            {stages.map((stage, index) => (
+              <button
+                key={stage.title}
+                type="button"
+                onClick={() => setActiveStage(index)}
+                aria-pressed={activeStage === index}
+                className={`group relative min-h-12 pb-3 text-left text-sm transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${activeStage === index ? "text-white" : "text-white/40 hover:text-white/80"}`}
+              >
+                {stage.title}
+                <span className="absolute inset-x-0 bottom-0 h-px bg-white/20" aria-hidden="true" />
+                {isInView && activeStage === index && <span key={`progress-${activeStage}`} className="capability-step-progress absolute inset-x-0 bottom-0 h-px bg-white" aria-hidden="true" />}
+              </button>
             ))}
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
-            <span className="font-mono text-[0.63rem] uppercase tracking-[0.14em] text-white/45">Kein paralleles System.</span>
-            <span className="display-type text-2xl tracking-[-0.05em]">Dein Betrieb bleibt führend. ↗</span>
           </div>
         </div>
       </div>

@@ -118,16 +118,16 @@ describe("homepage narrative", () => {
     expect(screen.getByRole("heading", { name: "Ein Kunde meldet sich." })).toBeInTheDocument();
 
     for (const heading of [
-      "Die Antwort ist nicht das Ergebnis.",
+      "Die Antwort war erst der Anfang.",
       "Für Menschen im Betrieb. Nicht für Folien.",
       "Bereit, keinen Anruf mehr zu verlieren?",
     ]) {
       expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
     }
 
-    expect(screen.getByRole("heading", { name: "Anfrage aufnehmen" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Kontext prüfen" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Schritt auslösen" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Verstehen." })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Abgleichen." })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Handeln." })).toBeInTheDocument();
     expect(document.querySelectorAll("#industries article")).toHaveLength(4);
     expect(screen.queryByRole("button", { name: /Branchen-Seite in Vorbereitung/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Wert, der sich messen lässt." })).not.toBeInTheDocument();
