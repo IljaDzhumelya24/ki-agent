@@ -118,14 +118,15 @@ describe("homepage narrative", () => {
     expect(screen.getByRole("heading", { name: "Ein Kunde meldet sich." })).toBeInTheDocument();
 
     for (const heading of [
-      "Kein Bot. Ein System, das handelt.",
+      "Ein Gespräch. Ein nächster Schritt.",
       "Für Menschen im Betrieb. Nicht für Folien.",
       "Bereit, keinen Anruf mehr zu verlieren?",
     ]) {
       expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
     }
 
-    expect(document.querySelectorAll("#capabilities article")).toHaveLength(3);
+    expect(screen.getByRole("list", { name: "Eingangskanäle" })).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Ziele im Betrieb" })).toBeInTheDocument();
     expect(document.querySelectorAll("#industries article")).toHaveLength(4);
     expect(screen.queryByRole("button", { name: /Branchen-Seite in Vorbereitung/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Wert, der sich messen lässt." })).not.toBeInTheDocument();

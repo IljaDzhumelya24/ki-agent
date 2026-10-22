@@ -53,9 +53,9 @@ export function SiteHeader() {
         return rect.top <= navY && rect.bottom > navY;
       });
       const wipe = section?.id === "channels" ? section.querySelector<HTMLElement>(".signal-light-wipe") : null;
-      const wipeRect = wipe?.getBoundingClientRect();
+      const wipeOpacity = wipe ? Number.parseFloat(window.getComputedStyle(wipe).opacity) : 0;
       const overLightSurface = section?.id === "capabilities" || section?.id === "industries" ||
-        Boolean(wipeRect && wipeRect.height > 0 && wipeRect.top <= navY);
+        wipeOpacity > 0.75;
       setNavTheme(overLightSurface ? "light" : "dark");
     };
     const handleScroll = () => {

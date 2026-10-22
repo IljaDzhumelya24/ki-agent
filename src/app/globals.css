@@ -390,9 +390,20 @@ button {
   z-index: 2;
   inset: 0;
   background: var(--paper);
-  transform: scaleY(0);
-  transform-origin: bottom center;
+  opacity: 0;
   pointer-events: none;
+}
+
+.signal-chapter:last-child {
+  color: #0b0c0c;
+}
+
+.signal-chapter:last-child p {
+  color: rgba(11, 12, 12, 0.7);
+}
+
+.signal-chapter:last-child .signal-chapter-meta {
+  border-color: rgba(11, 12, 12, 0.28);
 }
 
 .signal-chapters {
