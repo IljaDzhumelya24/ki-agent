@@ -381,12 +381,16 @@ button {
 }
 
 .signal-device-rail {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  pointer-events: none;
+}
+
+.signal-device-viewport {
   position: sticky;
   top: 0;
-  z-index: 10;
   height: 100svh;
-  margin-bottom: -100svh;
-  pointer-events: none;
 }
 
 .signal-device-stage--mobile {

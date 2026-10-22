@@ -199,7 +199,9 @@ export function ChannelStory() {
   return (
     <div className="signal-flow">
       <div className="signal-device-rail">
-        <div className="signal-device-stage"><div className="signal-device-motion" ref={desktopPhoneRef}><PhoneScene capabilityStage={capabilityVisible ? capabilityStage : null} /></div></div>
+        <div className="signal-device-viewport">
+          <div className="signal-device-stage"><div className="signal-device-motion" ref={desktopPhoneRef}><PhoneScene capabilityStage={capabilityVisible ? capabilityStage : null} /></div></div>
+        </div>
       </div>
       <section id="channels" ref={sectionRef} className="signal-story" aria-label="So arbeitet dein KI-Agent">
         <div ref={sceneRef} className="signal-scene">
