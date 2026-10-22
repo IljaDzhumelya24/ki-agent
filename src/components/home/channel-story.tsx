@@ -148,13 +148,11 @@ export function ChannelStory() {
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
         .to(phone, { rotationY: 9, rotationZ: -3, y: -25, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
         .to(phone, { autoAlpha: 0, y: -100, scale: 0.88, duration: 0.42, ease: "power2.inOut" }, 2.78)
-        .to(chapters[2], { autoAlpha: 0, y: -32, duration: 0.3, ease: "power2.in" }, 2.86)
+        .to(chapters[2], { autoAlpha: 0, y: -32, duration: 0.3, ease: "power2.in" }, 2.78)
         .to({}, { duration: 0.08 });
 
-      if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
-      if (progress) timeline.set(progress, { color: "#171a19" }, 2.42).to(progress, { autoAlpha: 0, duration: 0.25 }, 2.88);
-      if (progressTrack) timeline.set(progressTrack, { backgroundColor: "rgba(10, 12, 11, 0.2)" }, 2.42);
-      if (progressFill) timeline.set(progressFill, { backgroundColor: "#171a19" }, 2.42);
+      if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.36, ease: "power2.inOut" }, 3.02);
+      if (progress) timeline.to(progress, { autoAlpha: 0, duration: 0.25 }, 2.88);
       timeline.to(scene.querySelectorAll(".signal-trace"), { autoAlpha: 0, duration: 0.25 }, 2.86);
 
       reveals.forEach((rect) => {
