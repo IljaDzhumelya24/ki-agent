@@ -81,7 +81,7 @@ body {
   100% {
     transform: translateY(0) scaleX(1);
     filter: blur(0);
-    color: #0b0c0c;
+    color: var(--nav-hover-text, #0b0c0c);
   }
 }
 

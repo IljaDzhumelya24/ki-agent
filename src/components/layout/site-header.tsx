@@ -10,6 +10,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
   const [navVisible, setNavVisible] = useState(true);
+  const [navTheme, setNavTheme] = useState<"dark" | "light">("dark");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef(0);
@@ -45,6 +46,18 @@ export function SiteHeader() {
         }
       }
     };
+    const updateTheme = () => {
+      const navY = 36;
+      const section = Array.from(document.querySelectorAll<HTMLElement>("main > section")).find((candidate) => {
+        const rect = candidate.getBoundingClientRect();
+        return rect.top <= navY && rect.bottom > navY;
+      });
+      const wipe = section?.id === "channels" ? section.querySelector<HTMLElement>(".signal-light-wipe") : null;
+      const wipeRect = wipe?.getBoundingClientRect();
+      const overLightSurface = section?.id === "capabilities" || section?.id === "industries" ||
+        Boolean(wipeRect && wipeRect.height > 0 && wipeRect.top <= navY);
+      setNavTheme(overLightSurface ? "light" : "dark");
+    };
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrollingUp = currentScrollY < lastScrollYRef.current;
@@ -53,8 +66,13 @@ export function SiteHeader() {
         setNavVisible(scrollingUp || currentScrollY < 24);
       }
       lastScrollYRef.current = currentScrollY;
+      updateTheme();
     };
 
+    updateTheme();
+    const wipe = document.querySelector(".signal-light-wipe");
+    const wipeObserver = wipe ? new MutationObserver(updateTheme) : null;
+    if (wipe && wipeObserver) wipeObserver.observe(wipe, { attributes: true, attributeFilter: ["style"] });
     if (menuOpen) window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -62,6 +80,7 @@ export function SiteHeader() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scroll", handleScroll);
+      wipeObserver?.disconnect();
     };
   }, [menuOpen]);
 
@@ -74,7 +93,8 @@ export function SiteHeader() {
     <>
       <header
         data-scroll-state={navVisible ? "shown" : "hidden"}
-        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 text-white transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
+        data-theme={navTheme}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[transform,color,background-color] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navTheme === "light" ? "bg-[rgba(242,242,238,.88)] text-black backdrop-blur-xl [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
       >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
@@ -87,10 +107,10 @@ export function SiteHeader() {
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group relative isolate overflow-hidden border border-transparent px-3 py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] transition-[background-color,border-color,transform] duration-300 hover:border-white hover:bg-white hover:shadow-[0_0_24px_rgba(114,190,255,.26)] focus-visible:border-white focus-visible:bg-white"
+                className={`group relative isolate overflow-hidden border border-transparent px-3 py-2 font-mono text-[0.88rem] font-bold uppercase tracking-[0.015em] transition-[background-color,border-color,transform] duration-300 ${navTheme === "light" ? "hover:border-black hover:bg-black focus-visible:border-black focus-visible:bg-black" : "hover:border-white hover:bg-white hover:shadow-[0_0_24px_rgba(114,190,255,.26)] focus-visible:border-white focus-visible:bg-white"}`}
                 aria-label={`${item.label} – in Vorbereitung`}
               >
-                <span data-label={item.label} className="nav-label relative z-10 whitespace-nowrap text-white group-hover:text-black">
+                <span data-label={item.label} className={`nav-label relative z-10 whitespace-nowrap ${navTheme === "light" ? "text-black group-hover:text-white group-focus-visible:text-white" : "text-white group-hover:text-black group-focus-visible:text-black"}`}>
                   {item.label}
                 </span>
               </button>
@@ -100,15 +120,15 @@ export function SiteHeader() {
           <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-2">
             <a
               href="#contact"
-              className="group hidden h-10 w-[9.35rem] items-center justify-center border border-white bg-white font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] transition-[box-shadow,transform] duration-300 hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:shadow-[0_0_26px_rgba(114,190,255,.35)] sm:flex"
+              className={`group hidden h-10 w-[9.35rem] items-center justify-center border font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] transition-[background-color,border-color,box-shadow,transform] duration-300 sm:flex ${navTheme === "light" ? "border-black bg-black hover:bg-[#282b2b] focus-visible:bg-[#282b2b]" : "border-white bg-white hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:shadow-[0_0_26px_rgba(114,190,255,.35)]"}`}
             >
-              <span data-label="Demo starten" className="nav-label relative z-10 whitespace-nowrap text-black">Demo starten</span>
+              <span data-label="Demo starten" className={`nav-label relative z-10 whitespace-nowrap ${navTheme === "light" ? "text-white" : "text-black"}`}>Demo starten</span>
             </a>
             <button
               ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="grid size-10 place-items-center border border-black bg-white text-black transition-colors hover:bg-black hover:text-white lg:hidden"
+              className={`grid size-10 place-items-center border transition-colors lg:hidden ${navTheme === "light" ? "border-black bg-black text-white hover:bg-white hover:text-black" : "border-black bg-white text-black hover:bg-black hover:text-white"}`}
               aria-label="Menü öffnen"
               aria-expanded={menuOpen}
             >

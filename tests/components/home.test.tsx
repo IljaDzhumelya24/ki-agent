@@ -50,6 +50,42 @@ describe("SiteHeader", () => {
     fireEvent.scroll(window);
     expect(header).toHaveAttribute("data-scroll-state", "shown");
   });
+
+  it("switches to dark navigation on light sections and back on dark sections", () => {
+    const { container } = render(
+      <>
+        <SiteHeader />
+        <main>
+          <section id="top" />
+          <section id="capabilities" />
+          <section id="industries" />
+          <section id="contact" />
+        </main>
+      </>,
+    );
+    let currentSection = "top";
+    for (const section of container.querySelectorAll("main > section")) {
+      section.getBoundingClientRect = () => ({
+        top: section.id === currentSection ? 0 : 1000,
+        bottom: section.id === currentSection ? 900 : 1200,
+      }) as DOMRect;
+    }
+
+    const header = screen.getByRole("banner");
+    expect(header).toHaveAttribute("data-theme", "dark");
+
+    currentSection = "capabilities";
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute("data-theme", "light");
+
+    currentSection = "industries";
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute("data-theme", "light");
+
+    currentSection = "contact";
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute("data-theme", "dark");
+  });
 });
 
 describe("HeroSection", () => {
