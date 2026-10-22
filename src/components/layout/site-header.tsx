@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowDownRight, Menu, X } from "lucide-react";
+import gsap from "gsap";
 
 import { homeContent } from "@/content/home";
 import { PreparationNotice } from "@/components/ui/preparation-notice";
@@ -11,6 +12,7 @@ export function SiteHeader() {
   const [plannedLabel, setPlannedLabel] = useState<string | null>(null);
   const [navVisible, setNavVisible] = useState(true);
   const [navTheme, setNavTheme] = useState<"dark" | "light">("dark");
+  const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef(0);
@@ -20,6 +22,23 @@ export function SiteHeader() {
     setMenuOpen(false);
     window.requestAnimationFrame(() => menuButtonRef.current?.focus());
   }
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tween = gsap.to(header, {
+      y: navVisible ? 0 : -28,
+      opacity: navVisible ? 1 : 0,
+      duration: reducedMotion ? 0 : navVisible ? 0.72 : 0.52,
+      ease: "power3.out",
+      overwrite: "auto",
+      force3D: true,
+    });
+
+    return () => tween.kill();
+  }, [navVisible]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -103,10 +122,11 @@ export function SiteHeader() {
   return (
     <>
       <header
+        ref={headerRef}
         data-scroll-state={navVisible ? "shown" : "hidden"}
         data-theme={navTheme}
         onFocusCapture={() => setNavVisible(true)}
-        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[transform,opacity,color,background-color] duration-[550ms] ease-[cubic-bezier(.22,1,.36,1)] will-change-transform motion-reduce:transition-none ${navTheme === "light" ? "bg-[rgba(242,242,238,.88)] text-black backdrop-blur-xl [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-6 opacity-0"}`}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[color,background-color] duration-300 will-change-transform ${navTheme === "light" ? "bg-[rgba(242,242,238,.94)] text-black [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "" : "pointer-events-none"}`}
       >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
