@@ -69,7 +69,7 @@ export function SiteHeader() {
     };
     const updateTheme = () => {
       const navY = 36;
-      const section = Array.from(document.querySelectorAll<HTMLElement>("main > section")).find((candidate) => {
+      const section = Array.from(document.querySelectorAll<HTMLElement>("main section[id]")).find((candidate) => {
         const rect = candidate.getBoundingClientRect();
         return rect.top <= navY && rect.bottom > navY;
       });

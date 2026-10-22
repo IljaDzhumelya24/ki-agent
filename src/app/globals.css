@@ -547,7 +547,7 @@ button {
 .signal-device-stage {
   position: absolute;
   z-index: 5;
-  top: 51%;
+  top: 43%;
   right: clamp(9rem, 14vw, 17rem);
   perspective: 1400px;
   transform: translateY(-50%);
