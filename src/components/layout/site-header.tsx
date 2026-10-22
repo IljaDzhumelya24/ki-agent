@@ -14,6 +14,7 @@ export function SiteHeader() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef(0);
+  const scrollIntentRef = useRef(0);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -23,6 +24,7 @@ export function SiteHeader() {
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     lastScrollYRef.current = window.scrollY;
+    scrollIntentRef.current = 0;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -60,10 +62,19 @@ export function SiteHeader() {
     };
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const scrollingUp = currentScrollY < lastScrollYRef.current;
+      const delta = currentScrollY - lastScrollYRef.current;
 
       if (!menuOpen) {
-        setNavVisible(scrollingUp || currentScrollY < 24);
+        if (currentScrollY < 64) {
+          scrollIntentRef.current = 0;
+          setNavVisible(true);
+        } else if (delta > 0) {
+          scrollIntentRef.current = Math.max(0, scrollIntentRef.current) + delta;
+          if (scrollIntentRef.current > 32) setNavVisible(false);
+        } else if (delta < 0) {
+          scrollIntentRef.current = Math.min(0, scrollIntentRef.current) + delta;
+          if (scrollIntentRef.current < -20) setNavVisible(true);
+        }
       }
       lastScrollYRef.current = currentScrollY;
       updateTheme();
@@ -94,7 +105,8 @@ export function SiteHeader() {
       <header
         data-scroll-state={navVisible ? "shown" : "hidden"}
         data-theme={navTheme}
-        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[transform,color,background-color] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${navTheme === "light" ? "bg-[rgba(242,242,238,.88)] text-black backdrop-blur-xl [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "translate-y-0" : "-translate-y-[calc(100%+1rem)]"}`}
+        onFocusCapture={() => setNavVisible(true)}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[transform,opacity,color,background-color] duration-[550ms] ease-[cubic-bezier(.22,1,.36,1)] will-change-transform motion-reduce:transition-none ${navTheme === "light" ? "bg-[rgba(242,242,238,.88)] text-black backdrop-blur-xl [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-6 opacity-0"}`}
       >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
