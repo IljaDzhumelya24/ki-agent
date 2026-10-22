@@ -8,12 +8,8 @@ import { SignalCoreFallback } from "@/components/three/signal-core-fallback";
 import { ChannelStory } from "@/components/home/channel-story";
 import { CapabilitySection } from "@/components/home/capability-section";
 import { IndustryExplorer } from "@/components/home/industry-explorer";
-import { RoiSection } from "@/components/home/roi-section";
-import { ProcessSection } from "@/components/home/process-section";
-import { PricingPreview } from "@/components/home/pricing-preview";
 import { FinalCta } from "@/components/home/final-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { homeContent } from "@/content/home";
 
 describe("SiteHeader", () => {
   it("opens and closes an accessible menu without exposing broken future links", async () => {
@@ -72,15 +68,12 @@ describe("HeroSection", () => {
 });
 
 describe("homepage narrative", () => {
-  it("renders every substantive section from the approved content", () => {
+  it("keeps the homepage focused on story, value, industries and contact", () => {
     render(
       <>
         <ChannelStory />
         <CapabilitySection />
         <IndustryExplorer />
-        <RoiSection />
-        <ProcessSection />
-        <PricingPreview />
         <FinalCta />
         <SiteFooter />
       </>,
@@ -90,27 +83,18 @@ describe("homepage narrative", () => {
 
     for (const heading of [
       "Kein Bot. Ein System, das handelt.",
-      "Gebaut für den echten Betrieb.",
-      "Wert, der sich messen lässt.",
-      "Von der ersten Frage bis zum Go-live.",
-      "Ein Einstieg, der mitwächst.",
+      "Für Menschen im Betrieb. Nicht für Folien.",
       "Bereit, keinen Anruf mehr zu verlieren?",
     ]) {
       expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
     }
 
-    expect(
-      screen.getAllByRole("button", { name: /Branchen-Seite in Vorbereitung/i }),
-    ).toHaveLength(8);
-    for (const industry of homeContent.industries) {
-      expect(screen.getByText(industry.problem)).toBeInTheDocument();
-    }
-    for (const metric of homeContent.roi) {
-      expect(screen.getByText(metric.qualifier)).toBeInTheDocument();
-    }
-
-    expect(screen.getAllByRole("listitem", { name: /Prozessschritt/i })).toHaveLength(5);
-    expect(screen.getAllByRole("article", { name: /Paket/i })).toHaveLength(3);
+    expect(document.querySelectorAll("#capabilities article")).toHaveLength(3);
+    expect(document.querySelectorAll("#industries article")).toHaveLength(4);
+    expect(screen.queryByRole("button", { name: /Branchen-Seite in Vorbereitung/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Wert, der sich messen lässt." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Von der ersten Frage bis zum Go-live." })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Ein Einstieg, der mitwächst." })).not.toBeInTheDocument();
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
     expect(screen.queryByText(/Kundenlogo|Testimonial/i)).not.toBeInTheDocument();
   });

@@ -7,7 +7,7 @@ export function FinalCta() {
       <div className="cta-orb pointer-events-none absolute -right-[14rem] top-1/2 size-[44rem] -translate-y-1/2 rounded-full" />
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.2)_1px,transparent_1px)] [background-size:4rem_4rem] [mask-image:radial-gradient(circle_at_80%_50%,black,transparent_54%)]" />
       <div className="relative mx-auto max-w-[96rem]">
-        <SectionLabel>07 / Nächster Schritt</SectionLabel>
+        <SectionLabel>04 / Nächster Schritt</SectionLabel>
         <h2 className="display-type mt-10 max-w-[10ch] text-[clamp(4.6rem,10.6vw,11.8rem)] leading-[0.78] font-medium tracking-[-0.075em]">
           Bereit, keinen Anruf mehr zu verlieren?
         </h2>
