@@ -1,16 +1,13 @@
 import { homeContent } from "@/content/home";
-import { SectionLabel } from "@/components/ui/section-label";
 
 export function IndustryExplorer() {
   const featured = homeContent.industries.slice(0, 4);
-  const more = homeContent.industries.slice(4);
 
   return (
     <section id="industries" className="page-gutter relative z-20 bg-white py-24 md:py-32">
       <div className="mx-auto max-w-[96rem]">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-end">
-          <SectionLabel>03 / Branchen</SectionLabel>
-          <h2 className="display-type max-w-[13ch] text-[clamp(3.5rem,6.5vw,7rem)] leading-[0.9] font-medium">
+          <h2 className="display-type max-w-[13ch] text-[clamp(3.5rem,6.5vw,7rem)] leading-[0.9] font-medium lg:col-start-2">
             Für Menschen im Betrieb. Nicht für Folien.
           </h2>
         </div>
@@ -27,9 +24,6 @@ export function IndustryExplorer() {
           ))}
         </div>
 
-        <p className="mt-6 text-sm leading-6 text-[var(--graphite)]">
-          Auch für {more.map((industry) => industry.name).join(", ")}.
-        </p>
       </div>
     </section>
   );
