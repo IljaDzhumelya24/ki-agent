@@ -110,6 +110,7 @@ export function ChannelStory() {
       const screens = gsap.utils.toArray<HTMLElement>(".signal-screen", scene);
       const reveals = gsap.utils.toArray<SVGRectElement>(".signal-trace-reveal", scene);
       const wipe = scene.querySelector<HTMLElement>(".signal-light-wipe");
+      const deviceStage = scene.querySelector<HTMLElement>(".signal-device-stage");
       const progress = scene.querySelector<HTMLElement>(".signal-progress");
       const progressTrack = scene.querySelector<HTMLElement>(".signal-progress-track");
       const progressFill = progressTrack?.querySelector<HTMLElement>("span");
@@ -124,13 +125,17 @@ export function ChannelStory() {
           trigger: section,
           pin: scene,
           start: "top top",
-          end: "+=180%",
+          end: "+=195%",
           scrub: 0.55,
           invalidateOnRefresh: true,
           onUpdate: ({ progress }) => {
             if (progressRef.current) progressRef.current.style.transform = window.innerWidth < 768 ? `scaleX(${progress})` : `scaleY(${progress})`;
             if (percentageRef.current) percentageRef.current.textContent = `${Math.round(progress * 100)}%`;
             if (currentRef.current) currentRef.current.textContent = String(Math.min(3, Math.floor(progress * 3) + 1)).padStart(2, "0");
+            if (deviceStage) {
+              const exit = Math.max(0, Math.min(1, (progress - 0.9) / 0.08));
+              deviceStage.style.opacity = String(1 - exit * exit * (3 - 2 * exit));
+            }
           },
         },
       });
@@ -147,7 +152,7 @@ export function ChannelStory() {
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
         .to(phone, { rotationY: 9, rotationZ: -3, y: 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
-        .to({}, { duration: 0.75 });
+        .to({}, { duration: 1.15 });
 
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
@@ -162,6 +167,7 @@ export function ChannelStory() {
         timeline.scrollTrigger?.kill();
         timeline.kill();
         gsap.set([...chapters, ...screens, phone], { clearProps: "all" });
+        if (deviceStage) deviceStage.style.removeProperty("opacity");
         gsap.set([progress, progressTrack, progressFill, wipe].filter(Boolean), { clearProps: "all" });
         reveals.forEach((rect) => gsap.set(rect, { attr: { height: 0 } }));
       };
