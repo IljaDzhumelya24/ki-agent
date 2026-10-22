@@ -170,7 +170,7 @@ export function ChannelStory() {
         .to(phone, { rotationY: 9, rotationZ: -3, y: desktop ? -25 : 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
         .to({}, { duration: 1.15 });
 
-      if (desktop) timeline.to(phone, { rotationY: 0, rotationZ: 0, y: -70, scale: 0.88, duration: 0.5, ease: "power2.inOut" }, 3.35);
+      if (desktop) timeline.to(phone, { rotationY: 0, rotationZ: 0, y: 0, scale: 0.88, duration: 0.55, ease: "power2.inOut" }, 3.05);
 
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
