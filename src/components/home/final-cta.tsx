@@ -1,5 +1,3 @@
-import { MagneticLink } from "@/components/ui/magnetic-link";
-
 export function FinalCta() {
   return (
     <section id="contact" className="page-gutter relative isolate overflow-hidden bg-black py-28 text-white md:py-40">
@@ -17,17 +15,17 @@ export function FinalCta() {
           <h2 className="display-type max-w-[14ch] text-[clamp(3.75rem,7.2vw,8.5rem)] leading-[0.91] font-medium tracking-[-0.065em]">
             Während dein Team arbeitet, bleibt dein Betrieb erreichbar.
           </h2>
-          <p className="max-w-md text-lg leading-relaxed text-white/65 lg:pb-3 lg:text-xl">
-            Der Agent nimmt Anfragen auf, versteht das Anliegen und bringt den nächsten Schritt auf den Weg – am Telefon, per WhatsApp und auf deiner Website.
-          </p>
-        </div>
-        <div className="mt-20 flex flex-col gap-7 border-t border-white/25 pt-7 md:mt-28 md:flex-row md:items-center md:justify-between">
-          <p className="max-w-md text-base leading-relaxed text-white/65">
-            Sieh in einer Live-Demo, wie das für deinen Betrieb aussieht.
-          </p>
-          <MagneticLink href="mailto:demo@placeholder.ai" tone="light" className="min-h-14 self-start px-8 text-base md:self-auto">
-            Demo anfragen
-          </MagneticLink>
+          <div className="max-w-md lg:pb-3">
+            <p className="text-lg leading-relaxed text-white/65 lg:text-xl">
+              Der Agent nimmt Anfragen auf, versteht das Anliegen und bringt den nächsten Schritt auf den Weg – am Telefon, per WhatsApp und auf deiner Website.
+            </p>
+            <a
+              href="mailto:demo@placeholder.ai"
+              className="mt-9 inline-flex h-12 items-center justify-center border border-white bg-white px-7 font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-[background-color,box-shadow] duration-300 hover:bg-[#e8e8e4] hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            >
+              Demo anfragen
+            </a>
+          </div>
         </div>
       </div>
     </section>
