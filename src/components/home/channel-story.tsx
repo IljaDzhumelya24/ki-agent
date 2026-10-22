@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CapabilitySection } from "./capability-section";
+import { CapabilitySection, capabilityStages } from "./capability-section";
 
 const steps = [
   {
@@ -32,7 +32,8 @@ const steps = [
   },
 ];
 
-function PhoneScene() {
+function PhoneScene({ capabilityStage = null }: { capabilityStage?: number | null }) {
+  const activeCapability = capabilityStage === null ? null : capabilityStages[capabilityStage];
   return (
     <div className="signal-phone" aria-label="Beispielhafter Ablauf einer Kundenanfrage auf einem Smartphone">
       <div className="signal-phone-rim">
@@ -83,6 +84,21 @@ function PhoneScene() {
             <div className="signal-phone-activity signal-phone-activity--done"><i /> AN DEIN TEAM ÜBERGEBEN</div>
           </div>
 
+          {activeCapability && (
+            <div className="signal-capability-screen">
+              <div key={capabilityStage} className="signal-capability-content">
+                <span className="signal-screen-label">{activeCapability.phoneLabel}</span>
+                <strong className="signal-capability-title">{activeCapability.title}</strong>
+                <p className="signal-capability-copy">{activeCapability.detail}</p>
+                <div className="signal-capability-example">
+                  <span>IM BEISPIEL</span>
+                  <strong>{activeCapability.phoneExample}</strong>
+                </div>
+                <div className="signal-phone-activity"><i /> {activeCapability.phoneStatus}</div>
+              </div>
+            </div>
+          )}
+
           <div className="signal-phone-home" />
         </div>
       </div>
@@ -91,6 +107,8 @@ function PhoneScene() {
 }
 
 export function ChannelStory() {
+  const [capabilityStage, setCapabilityStage] = useState(0);
+  const [capabilityVisible, setCapabilityVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
   const desktopPhoneRef = useRef<HTMLDivElement>(null);
@@ -181,7 +199,7 @@ export function ChannelStory() {
   return (
     <div className="signal-flow">
       <div className="signal-device-rail">
-        <div className="signal-device-stage"><div className="signal-device-motion" ref={desktopPhoneRef}><PhoneScene /></div></div>
+        <div className="signal-device-stage"><div className="signal-device-motion" ref={desktopPhoneRef}><PhoneScene capabilityStage={capabilityVisible ? capabilityStage : null} /></div></div>
       </div>
       <section id="channels" ref={sectionRef} className="signal-story" aria-label="So arbeitet dein KI-Agent">
         <div ref={sceneRef} className="signal-scene">
@@ -214,7 +232,7 @@ export function ChannelStory() {
         </div>
         </div>
       </section>
-      <CapabilitySection />
+      <CapabilitySection onStageChange={setCapabilityStage} onVisibilityChange={setCapabilityVisible} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ export function IndustryExplorer() {
   const more = homeContent.industries.slice(4);
 
   return (
-    <section id="industries" className="page-gutter bg-white py-24 md:py-32">
+    <section id="industries" className="page-gutter relative z-20 bg-white py-24 md:py-32">
       <div className="mx-auto max-w-[96rem]">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:items-end">
           <SectionLabel>03 / Branchen</SectionLabel>

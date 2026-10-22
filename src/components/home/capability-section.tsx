@@ -2,22 +2,36 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const stages = [
+export const capabilityStages = [
   {
     title: "Verstehen.",
     detail: "Aus einer freien Nachricht werden Anliegen, Zeitwunsch und die Details, die wirklich zählen.",
+    phoneLabel: "ANLIEGEN ERKANNT",
+    phoneExample: "Termin morgen · vormittags",
+    phoneStatus: "KONTEXT ERFASST",
   },
   {
     title: "Abgleichen.",
     detail: "Der Agent berücksichtigt dein Wissen, deine Regeln und die Verfügbarkeit in bestehenden Systemen.",
+    phoneLabel: "MIT DEM BETRIEB ABGEGLICHEN",
+    phoneExample: "Freier Slot · 10:30 Uhr",
+    phoneStatus: "KALENDER GEPRÜFT",
   },
   {
     title: "Handeln.",
     detail: "Er bestätigt einen Schritt, dokumentiert ihn oder übergibt mit dem gesamten Kontext an dein Team.",
+    phoneLabel: "SCHRITT AUSGEFÜHRT",
+    phoneExample: "Termin bestätigt · Team informiert",
+    phoneStatus: "ERLEDIGT UND ÜBERGEBEN",
   },
 ];
 
-export function CapabilitySection() {
+type CapabilitySectionProps = {
+  onStageChange?: (stage: number) => void;
+  onVisibilityChange?: (visible: boolean) => void;
+};
+
+export function CapabilitySection({ onStageChange, onVisibilityChange }: CapabilitySectionProps = {}) {
   const [activeStage, setActiveStage] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -28,15 +42,22 @@ export function CapabilitySection() {
       setIsInView(true);
       return;
     }
-    const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting), { threshold: 0.35 });
+    const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting), { rootMargin: "0px 0px -15% 0px", threshold: 0 });
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
+    onStageChange?.(activeStage);
+  }, [activeStage, onStageChange]);
+  useEffect(() => {
+    onVisibilityChange?.(isInView);
+  }, [isInView, onVisibilityChange]);
+
+  useEffect(() => {
     if (!isInView) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setTimeout(() => setActiveStage((current) => (current + 1) % stages.length), 4600);
+    const timer = window.setTimeout(() => setActiveStage((current) => (current + 1) % capabilityStages.length), 4600);
     return () => window.clearTimeout(timer);
   }, [activeStage, isInView]);
 
@@ -52,7 +73,7 @@ export function CapabilitySection() {
           </p>
           <div className="mt-14 border-t border-black/20 pt-6 lg:mt-20" aria-label="Schritte des Agenten">
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              {stages.map((stage, index) => (
+              {capabilityStages.map((stage, index) => (
                 <button
                   key={stage.title}
                   type="button"
@@ -67,7 +88,7 @@ export function CapabilitySection() {
               ))}
             </div>
             <p key={activeStage} className="capability-active-content mt-10 max-w-xl min-h-32 text-[clamp(1.35rem,1.8vw,1.8rem)] leading-[1.35] tracking-[-0.025em] lg:mt-14">
-              {stages[activeStage].detail}
+              {capabilityStages[activeStage].detail}
             </p>
           </div>
         </div>
