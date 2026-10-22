@@ -126,7 +126,7 @@ export function SiteHeader() {
         data-scroll-state={navVisible ? "shown" : "hidden"}
         data-theme={navTheme}
         onFocusCapture={() => setNavVisible(true)}
-        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-[color,background-color] duration-300 will-change-transform ${navTheme === "light" ? "bg-[rgba(242,242,238,.94)] text-black [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "" : "pointer-events-none"}`}
+        className={`fixed inset-x-0 top-0 z-50 px-6 pt-4 transition-colors duration-300 will-change-transform ${navTheme === "light" ? "text-black [--nav-hover-text:#fff]" : "text-white [--nav-hover-text:#0b0c0c]"} ${navVisible ? "" : "pointer-events-none"}`}
       >
         <div className="relative h-10 w-full">
           <a href="#top" className="group absolute left-0 top-1/2 -translate-y-1/2" aria-label="Zur Startseite">
