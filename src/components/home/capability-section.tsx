@@ -3,7 +3,7 @@ const destinations = ["Kalender", "CRM / Kasse", "Dein Team"];
 
 export function CapabilitySection() {
   return (
-    <section id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-2 text-[var(--ink)] md:pb-32 md:pt-4">
+    <section id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-12 text-[var(--ink)] md:pb-32 md:pt-20">
       <div className="mx-auto max-w-[96rem]">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
           <h2 className="display-type max-w-[14ch] text-[clamp(3.5rem,6vw,6.6rem)] leading-[0.93] font-medium tracking-[-0.065em]">
