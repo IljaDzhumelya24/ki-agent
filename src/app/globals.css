@@ -438,6 +438,46 @@ button {
   pointer-events: none;
 }
 
+.signal-orbit {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  mix-blend-mode: difference;
+}
+
+.signal-orbit-path {
+  stroke: rgba(248, 247, 243, 0.2);
+  stroke-linecap: round;
+  stroke-width: 34;
+  stroke-dasharray: 360 340;
+  vector-effect: non-scaling-stroke;
+  animation: signal-orbit-flow 32s linear infinite;
+}
+
+.signal-orbit-path--two {
+  stroke-width: 26;
+  stroke-dasharray: 250 450;
+  animation-duration: 38s;
+  animation-delay: -11s;
+  animation-direction: reverse;
+}
+
+.signal-orbit-path--three {
+  stroke-width: 20;
+  stroke-dasharray: 410 290;
+  animation-duration: 44s;
+  animation-delay: -23s;
+}
+
+@keyframes signal-orbit-flow {
+  to { stroke-dashoffset: -700; }
+}
+
 .signal-chapter:last-child {
   color: #0b0c0c;
 }
@@ -1002,6 +1042,10 @@ button {
 }
 
 @media (max-width: 767px) {
+  .signal-orbit {
+    opacity: 0.6;
+  }
+
   .signal-device-rail {
     display: none;
   }
@@ -1353,6 +1397,10 @@ button {
 
 
 @media (prefers-reduced-motion: reduce) {
+  .signal-orbit-path {
+    animation: none;
+  }
+
   .signal-capability-content {
     animation: none;
   }
