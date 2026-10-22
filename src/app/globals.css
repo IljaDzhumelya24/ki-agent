@@ -499,6 +499,27 @@ button {
   color: #505754;
 }
 
+@media (min-width: 1280px) {
+  .signal-chapters {
+    width: min(48%, 47rem);
+  }
+
+  .signal-chapter h2 {
+    max-width: 11ch;
+    font-size: clamp(5rem, 5.6vw, 7rem);
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .signal-chapter p {
+    max-width: 34rem;
+    margin-top: clamp(2rem, 3.2vw, 3rem);
+    font-size: clamp(1.1rem, 1.25vw, 1.35rem);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+}
+
 .signal-device-stage {
   position: absolute;
   z-index: 5;
