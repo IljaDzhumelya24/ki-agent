@@ -213,10 +213,14 @@ export function ChannelStory() {
         </svg>
         <div className="signal-light-wipe" aria-hidden="true" />
         <svg className="signal-field" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <path className="signal-field-line signal-field-line--inner" d="M 865 -95 C 1010 88 879 236 1012 390 S 1110 602 928 742 S 878 926 1010 1000" />
+          <path className="signal-field-pulse signal-field-pulse--inner" d="M 865 -95 C 1010 88 879 236 1012 390 S 1110 602 928 742 S 878 926 1010 1000" />
           <path className="signal-field-line" d="M 1120 -90 C 1320 80 1370 210 1195 365 S 1130 575 1325 670 S 1390 855 1230 990" />
           <path className="signal-field-pulse" d="M 1120 -90 C 1320 80 1370 210 1195 365 S 1130 575 1325 670 S 1390 855 1230 990" />
           <path className="signal-field-line signal-field-line--outer" d="M 1335 -95 C 1495 110 1450 245 1360 355 S 1300 590 1470 715" />
           <path className="signal-field-pulse signal-field-pulse--outer" d="M 1335 -95 C 1495 110 1450 245 1360 355 S 1300 590 1470 715" />
+          <path className="signal-field-line signal-field-line--far" d="M 1515 45 C 1325 168 1590 338 1450 514 S 1195 755 1495 995" />
+          <path className="signal-field-pulse signal-field-pulse--far" d="M 1515 45 C 1325 168 1590 338 1450 514 S 1195 755 1495 995" />
         </svg>
         <div className="signal-chapters">
           {steps.map((step) => (
