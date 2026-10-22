@@ -1,5 +1,3 @@
-import { SectionLabel } from "@/components/ui/section-label";
-
 const channels = ["Telefon", "WhatsApp", "Website"];
 const destinations = ["Kalender", "CRM / Kasse", "Dein Team"];
 
@@ -7,14 +5,7 @@ export function CapabilitySection() {
   return (
     <section id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-2 text-[var(--ink)] md:pb-32 md:pt-4">
       <div className="mx-auto max-w-[96rem]">
-        <div className="flex flex-wrap items-start justify-between gap-5 border-t border-black/20 pt-5">
-          <SectionLabel>02 / Im Hintergrund</SectionLabel>
-          <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-black/45">
-            Vom Kontakt in den Betrieb
-          </span>
-        </div>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
+        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
           <h2 className="display-type max-w-[14ch] text-[clamp(3.5rem,6vw,6.6rem)] leading-[0.93] font-medium tracking-[-0.065em]">
             Ein Gespräch.<br />
             <span className="text-black/35">Ein nächster Schritt.</span>
