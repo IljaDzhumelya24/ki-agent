@@ -110,13 +110,11 @@ export function ChannelStory() {
       const screens = gsap.utils.toArray<HTMLElement>(".signal-screen", scene);
       const reveals = gsap.utils.toArray<SVGRectElement>(".signal-trace-reveal", scene);
       const wipe = scene.querySelector<HTMLElement>(".signal-light-wipe");
-      const handoffFade = scene.querySelector<HTMLElement>(".signal-handoff-fade");
       const progress = scene.querySelector<HTMLElement>(".signal-progress");
       const progressTrack = scene.querySelector<HTMLElement>(".signal-progress-track");
       const progressFill = progressTrack?.querySelector<HTMLElement>("span");
       reveals.forEach((rect) => gsap.set(rect, { attr: { height: 0 } }));
       if (wipe) gsap.set(wipe, { autoAlpha: 0 });
-      if (handoffFade) gsap.set(handoffFade, { autoAlpha: 0 });
       gsap.set(chapters.slice(1), { autoAlpha: 0, y: 48 });
       gsap.set(screens.slice(1), { autoAlpha: 0, y: 26 });
       gsap.set(phone, { autoAlpha: 0.82, y: 35, rotationY: -26, rotationZ: 8, scale: 0.84 });
@@ -126,7 +124,7 @@ export function ChannelStory() {
           trigger: section,
           pin: scene,
           start: "top top",
-          end: "+=155%",
+          end: "+=180%",
           scrub: 0.55,
           invalidateOnRefresh: true,
           onUpdate: ({ progress }) => {
@@ -149,10 +147,9 @@ export function ChannelStory() {
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
         .to(phone, { rotationY: 9, rotationZ: -3, y: 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
-        .to({}, { duration: 0.15 });
+        .to({}, { duration: 0.75 });
 
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
-      if (handoffFade) timeline.to(handoffFade, { autoAlpha: 1, duration: 0.18, ease: "power2.out" }, 2.55);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
       if (progressTrack) timeline.set(progressTrack, { backgroundColor: "rgba(10, 12, 11, 0.2)" }, 2.42);
       if (progressFill) timeline.set(progressFill, { backgroundColor: "#171a19" }, 2.42);
@@ -165,7 +162,7 @@ export function ChannelStory() {
         timeline.scrollTrigger?.kill();
         timeline.kill();
         gsap.set([...chapters, ...screens, phone], { clearProps: "all" });
-        gsap.set([progress, progressTrack, progressFill, wipe, handoffFade].filter(Boolean), { clearProps: "all" });
+        gsap.set([progress, progressTrack, progressFill, wipe].filter(Boolean), { clearProps: "all" });
         reveals.forEach((rect) => gsap.set(rect, { attr: { height: 0 } }));
       };
     });
@@ -197,7 +194,6 @@ export function ChannelStory() {
         </div>
 
         <div className="signal-device-stage"><div className="signal-device-motion" ref={phoneRef}><PhoneScene /></div></div>
-        <div className="signal-handoff-fade" aria-hidden="true" />
 
         <div className="signal-progress" aria-label="Fortschritt der Scroll-Animation">
           <span className="signal-progress-heading">FORTSCHRITT <span ref={percentageRef}>0%</span></span>
