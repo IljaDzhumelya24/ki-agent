@@ -7,28 +7,16 @@ import { CapabilitySection, capabilityStages } from "./capability-section";
 
 const steps = [
   {
-    number: "01",
-    label: "Kontakt",
     title: "Ein Kunde meldet sich.",
     description: "Ob Anruf, WhatsApp oder Website: Der Agent nimmt die Anfrage auf und beginnt das Gespräch – auch nach Feierabend.",
-    detailLabel: "EINGANG",
-    detail: "WHATSAPP / TELEFON / WEB",
   },
   {
-    number: "02",
-    label: "Verstehen",
     title: "Der Agent versteht.",
     description: "Er erkennt Terminwunsch und Zeitfenster, gleicht sie mit dem Wissen deines Betriebs ab und findet einen passenden freien Slot.",
-    detailLabel: "KONTEXT",
-    detail: "ANLIEGEN / ZEIT / VERFÜGBARKEIT",
   },
   {
-    number: "03",
-    label: "Handeln",
     title: "Der Termin steht.",
     description: "Der Kunde erhält eine Bestätigung. Dein Team bekommt die relevanten Details, ohne den gesamten Chat durchgehen zu müssen.",
-    detailLabel: "ERGEBNIS",
-    detail: "BESTÄTIGT / DOKUMENTIERT / ÜBERGEBEN",
   },
 ];
 
@@ -214,11 +202,9 @@ export function ChannelStory() {
         <div className="signal-light-wipe" aria-hidden="true" />
         <div className="signal-chapters">
           {steps.map((step) => (
-            <article className="signal-chapter" key={step.number}>
-              <span className="signal-step-label"><i /> {step.number} / {step.label}</span>
+            <article className="signal-chapter" key={step.title}>
               <h2>{step.title}</h2>
               <p>{step.description}</p>
-              <div className="signal-chapter-meta"><span>{step.detailLabel}</span><strong>{step.detail}</strong></div>
             </article>
           ))}
         </div>
