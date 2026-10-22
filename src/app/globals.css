@@ -470,6 +470,11 @@ button {
   opacity: 0;
 }
 
+.signal-step-label,
+.signal-chapter-meta {
+  display: none;
+}
+
 .signal-chapter h2 {
   max-width: 16ch;
   font-size: clamp(2.9rem, 4.5vw, 5.8rem);
