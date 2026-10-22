@@ -5,7 +5,7 @@ const destinations = ["Kalender", "CRM / Kasse", "Dein Team"];
 
 export function CapabilitySection() {
   return (
-    <section id="capabilities" className="page-gutter bg-[var(--paper)] py-24 text-[var(--ink)] md:py-32">
+    <section id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-2 text-[var(--ink)] md:pb-32 md:pt-4">
       <div className="mx-auto max-w-[96rem]">
         <div className="flex flex-wrap items-start justify-between gap-5 border-t border-black/20 pt-5">
           <SectionLabel>02 / Im Hintergrund</SectionLabel>
@@ -14,7 +14,7 @@ export function CapabilitySection() {
           </span>
         </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
+        <div className="mt-8 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
           <h2 className="display-type max-w-[14ch] text-[clamp(3.5rem,6vw,6.6rem)] leading-[0.93] font-medium tracking-[-0.065em]">
             Ein Gespräch.<br />
             <span className="text-black/35">Ein nächster Schritt.</span>
@@ -24,7 +24,7 @@ export function CapabilitySection() {
           </p>
         </div>
 
-        <div className="mt-16 grid border-y border-black/20 lg:grid-cols-[1fr_1.15fr_1fr]">
+        <div className="mt-12 grid border-y border-black/20 lg:grid-cols-[1fr_1.15fr_1fr]">
           <div className="flex flex-col px-1 py-9 lg:pr-10 lg:py-12">
             <div className="flex items-center justify-between font-mono text-[0.62rem] uppercase tracking-[0.16em] text-black/45">
               <span>01 / Eingang</span><span>→</span>

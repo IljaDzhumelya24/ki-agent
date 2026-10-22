@@ -146,8 +146,8 @@ export function ChannelStory() {
         .to(screens[1], { autoAlpha: 0, y: -26, duration: 0.22 }, 2.28)
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
-        .to(phone, { rotationY: 9, rotationZ: -3, y: -25, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
-        .to({}, { duration: 0.75 });
+        .to(phone, { rotationY: 9, rotationZ: -3, y: 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
+        .to({}, { duration: 0.42 });
 
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
