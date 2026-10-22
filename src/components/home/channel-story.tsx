@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CapabilitySection } from "./capability-section";
 
 const steps = [
   {
@@ -92,7 +93,8 @@ function PhoneScene() {
 export function ChannelStory() {
   const sectionRef = useRef<HTMLElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
-  const phoneRef = useRef<HTMLDivElement>(null);
+  const desktopPhoneRef = useRef<HTMLDivElement>(null);
+  const mobilePhoneRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const percentageRef = useRef<HTMLSpanElement>(null);
   const currentRef = useRef<HTMLSpanElement>(null);
@@ -101,16 +103,16 @@ export function ChannelStory() {
     gsap.registerPlugin(ScrollTrigger);
     const section = sectionRef.current;
     const scene = sceneRef.current;
-    const phone = phoneRef.current;
-    if (!section || !scene || !phone) return;
+    if (!section || !scene) return;
 
     const media = gsap.matchMedia();
-    media.add("(min-height: 651px) and (prefers-reduced-motion: no-preference)", () => {
+    const setupAnimation = (desktop: boolean) => () => {
+      const phone = desktop ? desktopPhoneRef.current : mobilePhoneRef.current;
+      if (!phone) return;
       const chapters = gsap.utils.toArray<HTMLElement>(".signal-chapter", scene);
-      const screens = gsap.utils.toArray<HTMLElement>(".signal-screen", scene);
+      const screens = gsap.utils.toArray<HTMLElement>(".signal-screen", phone);
       const reveals = gsap.utils.toArray<SVGRectElement>(".signal-trace-reveal", scene);
       const wipe = scene.querySelector<HTMLElement>(".signal-light-wipe");
-      const deviceStage = scene.querySelector<HTMLElement>(".signal-device-stage");
       const progress = scene.querySelector<HTMLElement>(".signal-progress");
       const progressTrack = scene.querySelector<HTMLElement>(".signal-progress-track");
       const progressFill = progressTrack?.querySelector<HTMLElement>("span");
@@ -132,10 +134,6 @@ export function ChannelStory() {
             if (progressRef.current) progressRef.current.style.transform = window.innerWidth < 768 ? `scaleX(${progress})` : `scaleY(${progress})`;
             if (percentageRef.current) percentageRef.current.textContent = `${Math.round(progress * 100)}%`;
             if (currentRef.current) currentRef.current.textContent = String(Math.min(3, Math.floor(progress * 3) + 1)).padStart(2, "0");
-            if (deviceStage) {
-              const exit = Math.max(0, Math.min(1, (progress - 0.9) / 0.08));
-              deviceStage.style.opacity = String(1 - exit * exit * (3 - 2 * exit));
-            }
           },
         },
       });
@@ -154,6 +152,8 @@ export function ChannelStory() {
         .to(phone, { rotationY: 9, rotationZ: -3, y: 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
         .to({}, { duration: 1.15 });
 
+      if (desktop) timeline.to(phone, { rotationY: 0, rotationZ: 0, y: 0, scale: 0.88, duration: 0.5, ease: "power2.inOut" }, 3.35);
+
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
       if (progressTrack) timeline.set(progressTrack, { backgroundColor: "rgba(10, 12, 11, 0.2)" }, 2.42);
@@ -167,18 +167,24 @@ export function ChannelStory() {
         timeline.scrollTrigger?.kill();
         timeline.kill();
         gsap.set([...chapters, ...screens, phone], { clearProps: "all" });
-        if (deviceStage) deviceStage.style.removeProperty("opacity");
         gsap.set([progress, progressTrack, progressFill, wipe].filter(Boolean), { clearProps: "all" });
         reveals.forEach((rect) => gsap.set(rect, { attr: { height: 0 } }));
       };
-    });
+    };
+
+    media.add("(min-width: 768px) and (min-height: 651px) and (prefers-reduced-motion: no-preference)", setupAnimation(true));
+    media.add("(max-width: 767px) and (min-height: 651px) and (prefers-reduced-motion: no-preference)", setupAnimation(false));
 
     return () => media.revert();
   }, []);
 
   return (
-    <section id="channels" ref={sectionRef} className="signal-story" aria-label="So arbeitet dein KI-Agent">
-      <div ref={sceneRef} className="signal-scene">
+    <div className="signal-flow">
+      <div className="signal-device-rail">
+        <div className="signal-device-stage"><div className="signal-device-motion" ref={desktopPhoneRef}><PhoneScene /></div></div>
+      </div>
+      <section id="channels" ref={sectionRef} className="signal-story" aria-label="So arbeitet dein KI-Agent">
+        <div ref={sceneRef} className="signal-scene">
         <svg className="signal-trace signal-trace--desktop" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
           <defs><clipPath id="signal-trace-desktop-clip"><rect className="signal-trace-reveal" data-full-height="900" x="0" y="0" width="1440" height="0" /></clipPath></defs>
           <path className="signal-trace-path" clipPath="url(#signal-trace-desktop-clip)" d="M720 0 C720 150 750 250 840 330 S960 405 950 460" />
@@ -199,14 +205,16 @@ export function ChannelStory() {
           ))}
         </div>
 
-        <div className="signal-device-stage"><div className="signal-device-motion" ref={phoneRef}><PhoneScene /></div></div>
+        <div className="signal-device-stage signal-device-stage--mobile"><div className="signal-device-motion" ref={mobilePhoneRef}><PhoneScene /></div></div>
 
         <div className="signal-progress" aria-label="Fortschritt der Scroll-Animation">
           <span className="signal-progress-heading">FORTSCHRITT <span ref={percentageRef}>0%</span></span>
           <div className="signal-progress-track"><span ref={progressRef} /></div>
           <span className="signal-progress-count"><span ref={currentRef}>01</span> / 03</span>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+      <CapabilitySection />
+    </div>
   );
 }

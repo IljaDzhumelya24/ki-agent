@@ -373,6 +373,24 @@ button {
   opacity: 0.78;
 }
 
+.signal-flow {
+  position: relative;
+  background: var(--paper);
+}
+
+.signal-device-rail {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 100svh;
+  margin-bottom: -100svh;
+  pointer-events: none;
+}
+
+.signal-device-stage--mobile {
+  display: none;
+}
+
 .signal-story {
   position: relative;
   background: var(--paper);
@@ -952,6 +970,14 @@ button {
 }
 
 @media (max-width: 767px) {
+  .signal-device-rail {
+    display: none;
+  }
+
+  .signal-device-stage--mobile {
+    display: block;
+  }
+
   .hero-thread-out {
     height: 5rem;
   }
@@ -1255,6 +1281,14 @@ button {
 }
 
 @media (max-height: 650px), (prefers-reduced-motion: reduce) {
+  .signal-device-rail {
+    display: none;
+  }
+
+  .signal-device-stage--mobile {
+    display: block;
+  }
+
   .signal-scene {
     height: auto;
     min-height: 0;

@@ -41,48 +41,37 @@ export function CapabilitySection() {
   }, [activeStage, isInView]);
 
   return (
-    <section ref={sectionRef} id="capabilities" className="page-gutter bg-[var(--paper)] pb-24 pt-12 text-[var(--ink)] md:pb-32 md:pt-20">
-      <div className="mx-auto grid max-w-[96rem] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:gap-0">
-        <div className="flex flex-col justify-between lg:pr-20 lg:py-10">
-          <h2 className="display-type max-w-[10ch] text-[clamp(3.7rem,6vw,7rem)] leading-[0.93] font-medium tracking-[-0.07em]">
+    <section ref={sectionRef} id="capabilities" className="page-gutter relative bg-[var(--paper)] py-24 text-[var(--ink)] lg:min-h-[105svh] lg:py-[14svh]">
+      <div className="mx-auto grid max-w-[96rem] lg:grid-cols-[minmax(0,52%)_minmax(0,48%)]">
+        <div className="lg:pr-[clamp(3rem,6vw,8rem)]">
+          <h2 className="display-type max-w-[11ch] text-[clamp(3.2rem,4.8vw,5.5rem)] leading-[0.96] font-medium tracking-[-0.065em]">
             Die Antwort war erst der Anfang.
           </h2>
-          <p className="mt-10 max-w-md border-t border-black/20 pt-6 text-base leading-8 text-[var(--graphite)] lg:mt-16">
+          <p className="mt-8 max-w-xl text-base leading-8 text-[var(--graphite)] lg:mt-10">
             Dein Agent hört nicht bei einer Nachricht auf. Er versteht das Anliegen, gleicht es mit deinem Betrieb ab und führt freigegebene Schritte aus. Wenn etwas unklar ist, übernimmt dein Team mit dem gesamten Kontext.
           </p>
-        </div>
-
-        <div className="flex min-h-[35rem] flex-col justify-between overflow-hidden bg-[#101111] px-7 py-9 text-[#f4f3ef] md:px-12 md:py-12 lg:px-14">
-          <div className="flex items-center justify-between border-b border-white/20 pb-6">
-            <span className="display-type text-xl tracking-[-0.04em]">So wird aus Kontakt Handlung.</span>
-            <span className="size-2 rounded-full bg-white/85" aria-hidden="true" />
-          </div>
-
-          <div key={activeStage} className="capability-active-content py-14">
-            <h3 className="display-type text-[clamp(3rem,6.4vw,7.5rem)] leading-[0.85] tracking-[-0.075em]">
-              {stages[activeStage].title}
-            </h3>
-            <p className="mt-10 max-w-md text-base leading-7 text-white/65">
+          <div className="mt-14 border-t border-black/20 pt-6 lg:mt-20" aria-label="Schritte des Agenten">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6">
+              {stages.map((stage, index) => (
+                <button
+                  key={stage.title}
+                  type="button"
+                  onClick={() => setActiveStage(index)}
+                  aria-pressed={activeStage === index}
+                  className={`relative min-h-14 pb-4 text-left text-[clamp(0.88rem,1.2vw,1.1rem)] font-medium transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black ${activeStage === index ? "text-black" : "text-black/40 hover:text-black/75"}`}
+                >
+                  {stage.title}
+                  <span className="absolute inset-x-0 bottom-0 h-px bg-black/15" aria-hidden="true" />
+                  {isInView && activeStage === index && <span key={`progress-${activeStage}`} className="capability-step-progress absolute inset-x-0 bottom-0 h-px bg-black" aria-hidden="true" />}
+                </button>
+              ))}
+            </div>
+            <p key={activeStage} className="capability-active-content mt-10 max-w-xl min-h-32 text-[clamp(1.35rem,1.8vw,1.8rem)] leading-[1.35] tracking-[-0.025em] lg:mt-14">
               {stages[activeStage].detail}
             </p>
           </div>
-
-          <div className="grid grid-cols-3 gap-4 border-t border-white/20 pt-6" aria-label="Schritte des Agenten">
-            {stages.map((stage, index) => (
-              <button
-                key={stage.title}
-                type="button"
-                onClick={() => setActiveStage(index)}
-                aria-pressed={activeStage === index}
-                className={`group relative min-h-12 pb-3 text-left text-sm transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white ${activeStage === index ? "text-white" : "text-white/40 hover:text-white/80"}`}
-              >
-                {stage.title}
-                <span className="absolute inset-x-0 bottom-0 h-px bg-white/20" aria-hidden="true" />
-                {isInView && activeStage === index && <span key={`progress-${activeStage}`} className="capability-step-progress absolute inset-x-0 bottom-0 h-px bg-white" aria-hidden="true" />}
-              </button>
-            ))}
-          </div>
         </div>
+        <div className="hidden lg:block" aria-hidden="true" />
       </div>
     </section>
   );

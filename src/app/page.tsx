@@ -2,7 +2,6 @@ import { HeroSection } from "@/components/home/hero-section";
 import { EntryIntro } from "@/components/home/entry-intro";
 import { HomeMotion } from "@/components/home/home-motion";
 import { ChannelStory } from "@/components/home/channel-story";
-import { CapabilitySection } from "@/components/home/capability-section";
 import { IndustryExplorer } from "@/components/home/industry-explorer";
 import { FinalCta } from "@/components/home/final-cta";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -17,7 +16,6 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <ChannelStory />
-        <CapabilitySection />
         <IndustryExplorer />
         <FinalCta />
       </main>
