@@ -411,7 +411,7 @@ button {
 .signal-trace {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -438,7 +438,7 @@ button {
   pointer-events: none;
 }
 
-.signal-orbit {
+.signal-field {
   position: absolute;
   z-index: 3;
   inset: 0;
@@ -450,32 +450,33 @@ button {
   mix-blend-mode: difference;
 }
 
-.signal-orbit-path {
-  stroke: rgba(248, 247, 243, 0.2);
-  stroke-linecap: round;
-  stroke-width: 34;
-  stroke-dasharray: 360 340;
+.signal-field-line,
+.signal-field-pulse {
+  stroke: rgba(248, 247, 243, 0.19);
+  stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
-  animation: signal-orbit-flow 32s linear infinite;
 }
 
-.signal-orbit-path--two {
-  stroke-width: 26;
-  stroke-dasharray: 250 450;
-  animation-duration: 38s;
-  animation-delay: -11s;
-  animation-direction: reverse;
+.signal-field-line--outer {
+  stroke-opacity: 0.55;
 }
 
-.signal-orbit-path--three {
-  stroke-width: 20;
-  stroke-dasharray: 410 290;
-  animation-duration: 44s;
-  animation-delay: -23s;
+.signal-field-pulse {
+  stroke: rgba(248, 247, 243, 0.72);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 100 1900;
+  animation: signal-field-travel 22s linear infinite;
 }
 
-@keyframes signal-orbit-flow {
-  to { stroke-dashoffset: -700; }
+.signal-field-pulse--outer {
+  animation-duration: 27s;
+  animation-delay: -12s;
+}
+
+@keyframes signal-field-travel {
+  from { stroke-dashoffset: 900; }
+  to { stroke-dashoffset: -1100; }
 }
 
 .signal-chapter:last-child {
@@ -488,7 +489,7 @@ button {
 
 .signal-chapters {
   position: absolute;
-  z-index: 4;
+  z-index: 5;
   top: 0;
   bottom: 0;
   left: var(--gutter);
@@ -1042,8 +1043,8 @@ button {
 }
 
 @media (max-width: 767px) {
-  .signal-orbit {
-    opacity: 0.6;
+  .signal-field {
+    display: none;
   }
 
   .signal-device-rail {
@@ -1397,8 +1398,9 @@ button {
 
 
 @media (prefers-reduced-motion: reduce) {
-  .signal-orbit-path {
+  .signal-field-pulse {
     animation: none;
+    opacity: 0;
   }
 
   .signal-capability-content {

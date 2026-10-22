@@ -212,10 +212,11 @@ export function ChannelStory() {
           <path className="signal-trace-path" clipPath="url(#signal-trace-mobile-clip)" d="M195 0 C195 80 380 70 380 160 L380 345 C380 390 280 405 195 420" />
         </svg>
         <div className="signal-light-wipe" aria-hidden="true" />
-        <svg className="signal-orbit" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-          <path className="signal-orbit-path signal-orbit-path--one" d="M 650 -110 C 490 125 865 169 736 393 S 478 710 732 1010" />
-          <path className="signal-orbit-path signal-orbit-path--two" d="M 1115 -120 C 857 90 1194 267 1035 446 S 841 744 1162 1020" />
-          <path className="signal-orbit-path signal-orbit-path--three" d="M 1530 134 C 1322 23 1210 212 1327 356 S 1539 568 1260 724 S 1242 925 1500 1020" />
+        <svg className="signal-field" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <path className="signal-field-line" d="M 1120 -90 C 1320 80 1370 210 1195 365 S 1130 575 1325 670 S 1390 855 1230 990" />
+          <path className="signal-field-pulse" d="M 1120 -90 C 1320 80 1370 210 1195 365 S 1130 575 1325 670 S 1390 855 1230 990" />
+          <path className="signal-field-line signal-field-line--outer" d="M 1335 -95 C 1495 110 1450 245 1360 355 S 1300 590 1470 715" />
+          <path className="signal-field-pulse signal-field-pulse--outer" d="M 1335 -95 C 1495 110 1450 245 1360 355 S 1300 590 1470 715" />
         </svg>
         <div className="signal-chapters">
           {steps.map((step) => (
