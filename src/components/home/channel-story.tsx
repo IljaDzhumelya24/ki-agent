@@ -124,7 +124,7 @@ export function ChannelStory() {
           trigger: section,
           pin: scene,
           start: "top top",
-          end: "+=190%",
+          end: "+=155%",
           scrub: 0.55,
           invalidateOnRefresh: true,
           onUpdate: ({ progress }) => {
@@ -147,7 +147,7 @@ export function ChannelStory() {
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
         .to(phone, { rotationY: 9, rotationZ: -3, y: 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
-        .to({}, { duration: 0.42 });
+        .to({}, { duration: 0.15 });
 
       if (wipe) timeline.to(wipe, { autoAlpha: 1, duration: 0.58, ease: "power2.inOut" }, 2.05);
       if (progress) timeline.set(progress, { color: "#171a19" }, 2.42);
