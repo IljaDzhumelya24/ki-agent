@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function FinalCta() {
   return (
     <section id="contact" className="page-gutter relative isolate overflow-hidden bg-black py-28 text-white md:py-40">
@@ -19,12 +21,12 @@ export function FinalCta() {
             <p className="text-lg leading-relaxed text-white/65 lg:text-xl">
               Der Agent nimmt Anfragen auf, versteht das Anliegen und bringt den nächsten Schritt auf den Weg – am Telefon, per WhatsApp und auf deiner Website.
             </p>
-            <a
-              href="mailto:demo@placeholder.ai"
+            <Link
+              href="/kontakt"
               className="mt-9 inline-flex h-12 items-center justify-center border border-white bg-white px-7 font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-[background-color,box-shadow] duration-300 hover:bg-[#e8e8e4] hover:shadow-[0_0_26px_rgba(114,190,255,.35)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
-              Demo anfragen
-            </a>
+              Kontakt aufnehmen
+            </Link>
           </div>
         </div>
       </div>

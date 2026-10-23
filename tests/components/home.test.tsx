@@ -6,7 +6,6 @@ import { HeroSection } from "@/components/home/hero-section";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SignalCoreFallback } from "@/components/three/signal-core-fallback";
 import { ChannelStory } from "@/components/home/channel-story";
-import { CapabilitySection } from "@/components/home/capability-section";
 import { IndustryExplorer } from "@/components/home/industry-explorer";
 import { FinalCta } from "@/components/home/final-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -18,19 +17,16 @@ describe("SiteHeader", () => {
 
     expect(screen.getByText("PLACEHOLDER/AI")).toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(
-      screen
-        .getByRole("button", { name: "Lösungen – in Vorbereitung" })
-        .querySelector("svg"),
-    ).toBeNull();
+    expect(screen.getByRole("link", { name: "Lösungen" })).toHaveAttribute("href", "/loesungen");
+    expect(screen.getByRole("button", { name: "Technologie – in Vorbereitung" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Menü öffnen" }));
 
     const dialog = screen.getByRole("dialog", { name: "Hauptnavigation" });
     expect(dialog).toBeInTheDocument();
-    expect(within(dialog).getAllByRole("button", { name: /in Vorbereitung/i })).toHaveLength(4);
+    expect(within(dialog).getAllByRole("button", { name: /in Vorbereitung/i })).toHaveLength(1);
     expect(screen.queryByRole("button", { name: "Über uns – in Vorbereitung" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Lösungen" })).not.toBeInTheDocument();
+    expect(within(dialog).getByRole("link", { name: "Lösungen" })).toHaveAttribute("href", "/loesungen");
 
     await user.click(screen.getByRole("button", { name: "Menü schließen" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -108,7 +104,6 @@ describe("homepage narrative", () => {
     render(
       <>
         <ChannelStory />
-        <CapabilitySection />
         <IndustryExplorer />
         <FinalCta />
         <SiteFooter />
@@ -120,7 +115,7 @@ describe("homepage narrative", () => {
     for (const heading of [
       "Die Antwort war erst der Anfang.",
       "Für Menschen im Betrieb. Nicht für Folien.",
-      "Bereit, keinen Anruf mehr zu verlieren?",
+      "Während dein Team arbeitet, bleibt dein Betrieb erreichbar.",
     ]) {
       expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
     }
@@ -134,6 +129,7 @@ describe("homepage narrative", () => {
     expect(screen.queryByRole("heading", { name: "Von der ersten Frage bis zum Go-live." })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Ein Einstieg, der mitwächst." })).not.toBeInTheDocument();
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Kontakt aufnehmen" })).toHaveAttribute("href", "/kontakt");
     expect(screen.queryByText(/Kundenlogo|Testimonial/i)).not.toBeInTheDocument();
   });
 });

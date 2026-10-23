@@ -31,6 +31,39 @@ export function HomeMotion() {
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
+    const handleSectionLink = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        !(event.target instanceof Element)
+      ) {
+        return;
+      }
+
+      const link = event.target.closest<HTMLAnchorElement>("a[data-smooth-section-link]");
+      const section = link?.hash
+        ? document.getElementById(decodeURIComponent(link.hash.slice(1)))
+        : null;
+
+      if (!link || !section) return;
+
+      event.preventDefault();
+      if (window.location.hash !== link.hash) {
+        window.history.pushState(null, "", link.hash);
+      }
+
+      lenis.scrollTo(section, {
+        duration: 1.25,
+        easing: (progress) => 1 - Math.pow(1 - progress, 3),
+      });
+    };
+
+    document.addEventListener("click", handleSectionLink);
+
     const context = gsap.context(() => {
       gsap.fromTo(
         "[data-reveal-line]",
@@ -65,6 +98,7 @@ export function HomeMotion() {
     });
 
     return () => {
+      document.removeEventListener("click", handleSectionLink);
       context.revert();
       gsap.ticker.remove(update);
       lenis.destroy();

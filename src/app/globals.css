@@ -67,6 +67,45 @@ body {
   background: var(--scroll-thumb-hover);
 }
 
+.contact-trace {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: contact-trace-in 2.2s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+
+.contact-trace-delayed {
+  animation-delay: 0.7s;
+}
+
+.contact-copy {
+  animation: contact-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.contact-form-intro {
+  animation: contact-enter 1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+
+@keyframes contact-trace-in {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes contact-enter {
+  from { opacity: 0; transform: translateY(1.6rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-trace,
+  .contact-copy,
+  .contact-form-intro {
+    animation: none;
+  }
+
+  .contact-trace {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes nav-label-orbit {
   0% {
     transform: translateY(0.16em) scaleX(0.92) skewX(-8deg);
@@ -94,6 +133,52 @@ body {
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
+@keyframes solution-panel-in {
+  from { opacity: 0; transform: translateY(1.25rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.solution-panel-enter {
+  animation: solution-panel-in 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes solution-line-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes solution-preview-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-1.5rem, 1rem, 0); }
+}
+
+@keyframes solution-light-shift {
+  from { opacity: 0.35; transform: translate3d(2rem, -1rem, 0) scale(0.95); }
+  to { opacity: 0.7; transform: translate3d(-1rem, 1rem, 0) scale(1.06); }
+}
+
+.solution-hero-board::after {
+  position: absolute;
+  inset: 15% -35% -30% 15%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.09), transparent 56%);
+  pointer-events: none;
+  content: "";
+  animation: solution-light-shift 8s ease-in-out infinite alternate;
+}
+
+.solution-hero-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: solution-line-draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+}
+
+.solution-hero-path--late {
+  animation-delay: 0.8s;
+}
+
+.solution-preview-line {
+  animation: solution-preview-drift 8s ease-in-out infinite alternate;
+}
+
 @keyframes capability-progress {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -110,7 +195,13 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .capability-active-content,
-  .capability-step-progress { animation: none; }
+  .capability-step-progress,
+  .solution-panel-enter,
+  .solution-hero-board::after,
+  .solution-hero-path,
+  .solution-preview-line { animation: none; }
+
+  .solution-hero-path { stroke-dashoffset: 0; }
 }
 
 .nav-label::after {
@@ -1431,5 +1522,136 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.industry-hero-lines {
+  position: absolute;
+  top: -8%;
+  right: -7%;
+  width: min(74vw, 76rem);
+  height: 116%;
+  pointer-events: none;
+  opacity: 0.7;
+  -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 46%);
+  mask-image: linear-gradient(90deg, transparent 4%, #000 46%);
+}
+
+.industry-hero-lines > path {
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1;
+}
+
+.industry-hero-trace {
+  stroke: rgba(255, 255, 255, 0.82);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 110 1600;
+  animation: industry-trace-flow 13s linear infinite;
+}
+
+.industry-hero-trace--two {
+  animation-delay: -4.3s;
+}
+
+.industry-hero-trace--three {
+  animation-delay: -8.6s;
+}
+
+@keyframes industry-trace-flow {
+  from { stroke-dashoffset: 1710; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 767px) {
+  .industry-hero-lines {
+    top: 5rem;
+    right: -68%;
+    width: 135%;
+    height: 75%;
+    opacity: 0.38;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .industry-hero-trace {
+    animation: none;
+  }
+}
+
+.pricing-hero-trace {
+  stroke: rgba(11, 12, 12, 0.48);
+  stroke-dasharray: 150 1500;
+  animation: pricing-trace 12s linear infinite;
+}
+
+.pricing-result-lines {
+  color: rgba(255, 255, 255, 0.13);
+  animation: pricing-lines-drift 16s ease-in-out infinite alternate;
+}
+
+.price-range {
+  height: 0.3rem;
+  cursor: pointer;
+  accent-color: #101212;
+}
+
+.price-range:focus-visible {
+  outline: 2px solid #101212;
+  outline-offset: 8px;
+}
+
+@media (max-width: 639px) {
+  .price-range {
+    height: 2.5rem;
+    appearance: none;
+    background: transparent;
+  }
+
+  .price-range::-webkit-slider-runnable-track {
+    height: 3px;
+    background: #c8cac6;
+  }
+
+  .price-range::-moz-range-track {
+    height: 3px;
+    background: #c8cac6;
+  }
+
+  .price-range::-webkit-slider-thumb {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: -0.65rem;
+    appearance: none;
+    border: 3px solid white;
+    border-radius: 50%;
+    background: #101212;
+    box-shadow: 0 0 0 1px #101212;
+  }
+
+  .price-range::-moz-range-thumb {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 3px solid white;
+    border-radius: 50%;
+    background: #101212;
+    box-shadow: 0 0 0 1px #101212;
+  }
+}
+
+@keyframes pricing-trace {
+  from { stroke-dashoffset: 1650; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pricing-lines-drift {
+  from { transform: translate3d(-1.5rem, 0, 0); }
+  to { transform: translate3d(1.5rem, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-hero-trace,
+  .pricing-result-lines {
+    animation: none;
   }
 }

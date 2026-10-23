@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import { homeContent } from "@/content/home";
 import { PreparationNotice } from "@/components/ui/preparation-notice";
@@ -20,15 +21,18 @@ export function SiteFooter() {
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-white/50">Navigation</p>
               <div className="mt-6 flex flex-col items-start gap-3">
                 {homeContent.navigation.map((item) => (
-                  <button key={item.href} type="button" onClick={() => setPlannedLabel(item.label)} className="text-base text-white/65 transition-colors hover:text-white">{item.label}</button>
+                  item.status === "live" ? (
+                    <Link key={item.href} href={item.href} className="text-base text-white/65 transition-colors hover:text-white">{item.label}</Link>
+                  ) : (
+                    <button key={item.href} type="button" onClick={() => setPlannedLabel(item.label)} className="text-base text-white/65 transition-colors hover:text-white">{item.label}</button>
+                  )
                 ))}
               </div>
             </div>
             <div>
               <p className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-white/50">Kontakt</p>
               <div className="mt-6 flex flex-col gap-3 text-base text-white/65">
-                <a href="mailto:demo@placeholder.ai" className="transition-colors hover:text-white">E-Mail</a>
-                <a href="#contact" className="transition-colors hover:text-white">Demo</a>
+                <Link href="/kontakt" className="transition-colors hover:text-white">Nachricht schreiben</Link>
               </div>
             </div>
             <div>

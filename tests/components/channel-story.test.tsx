@@ -15,8 +15,8 @@ describe("ChannelStory phone preview", () => {
   it("shows a useful reply and the agent's next action instead of an empty chat", () => {
     render(<ChannelStory />);
 
-    expect(screen.getByText(/welches zeitfenster passt ihnen/i)).toBeInTheDocument();
-    expect(screen.getByText(/freie termine prüfen/i)).toBeInTheDocument();
-    expect(screen.getByText(/an dein team übergeben/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/welches zeitfenster passt ihnen/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/freie termine prüfen/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/an dein team übergeben/i).length).toBeGreaterThan(0);
   });
 });

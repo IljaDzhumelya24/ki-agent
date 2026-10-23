@@ -33,9 +33,14 @@ describe("homeContent", () => {
     ).toBe(true);
   });
 
-  it("marks future navigation destinations as planned", () => {
-    expect(
-      homeContent.navigation.every((item) => item.status === "planned"),
-    ).toBe(true);
+  it("links finished pages and keeps only future destinations planned", () => {
+    expect(homeContent.navigation.filter((item) => item.status === "live").map((item) => item.href)).toEqual([
+      "/loesungen",
+      "/branchen",
+      "/preise",
+    ]);
+    expect(homeContent.navigation.filter((item) => item.status === "planned").map((item) => item.label)).toEqual([
+      "Technologie",
+    ]);
   });
 });

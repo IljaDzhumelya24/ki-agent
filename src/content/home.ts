@@ -37,15 +37,15 @@ export interface PackagePreview {
 export interface NavigationItem {
   label: string;
   href: string;
-  status: "planned";
+  status: "planned" | "live";
 }
 
 export const homeContent = {
   navigation: [
-    { label: "Lösungen", href: "/loesungen", status: "planned" },
-    { label: "Branchen", href: "/branchen", status: "planned" },
+    { label: "Lösungen", href: "/loesungen", status: "live" },
+    { label: "Branchen", href: "/branchen", status: "live" },
     { label: "Technologie", href: "/technologie", status: "planned" },
-    { label: "Preise", href: "/preise", status: "planned" },
+    { label: "Preise", href: "/preise", status: "live" },
   ] satisfies NavigationItem[],
   hero: {
     eyebrow: "KI-Agenten für lokale Betriebe",
