@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowDownRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import gsap from "gsap";
 
 import { homeContent } from "@/content/home";
@@ -176,37 +176,41 @@ export function SiteHeader() {
           role="dialog"
           aria-modal="true"
           aria-label="Hauptnavigation"
-          className="fixed inset-0 z-[70] flex min-h-dvh flex-col bg-black p-5 text-white"
+          className="fixed inset-0 z-[100] isolate flex h-dvh flex-col overflow-y-auto overscroll-contain bg-black px-6 pb-6 pt-4 text-white"
         >
-          <div className="flex items-center justify-between border-b border-white/15 pb-5">
-            <span className="font-mono text-[0.68rem] font-bold">PLACEHOLDER/AI</span>
+          <div className="flex h-10 shrink-0 items-center justify-between">
+            <span className="display-type text-[1.7rem] font-semibold leading-none tracking-[-0.075em]">PLACEHOLDER/AI</span>
             <button
               type="button"
               autoFocus
               onClick={closeMenu}
               aria-label="Menü schließen"
-              className="grid size-11 place-items-center rounded-full border border-white/20 hover:bg-white hover:text-black"
+              className="grid size-10 place-items-center border border-white bg-white text-black transition-colors hover:bg-black hover:text-white"
             >
-              <X className="size-5" aria-hidden="true" />
+              <X className="size-4" aria-hidden="true" />
             </button>
           </div>
-          <nav className="flex flex-1 flex-col justify-center" aria-label="Mobile Hauptnavigation">
-            {homeContent.navigation.map((item, index) => (
+          <nav className="flex flex-1 flex-col justify-center py-10" aria-label="Mobile Hauptnavigation">
+            {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group flex items-center justify-between border-b border-white/15 py-5 text-left"
+                className="group flex w-full items-center justify-between border-t border-white/20 py-5 text-left last:border-b"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
-                <span className="flex items-start gap-4">
-                  <span className="mt-2 font-mono text-[0.6rem] text-white/40">0{index + 1}</span>
-                  <span className="display-type text-[clamp(2.4rem,11vw,5rem)] leading-none">{item.label}</span>
-                </span>
-                <ArrowDownRight className="size-6 text-white/45 transition-transform group-hover:rotate-45" aria-hidden="true" />
+                <span className="display-type text-[clamp(2.15rem,9vw,3.6rem)] leading-none tracking-[-0.055em] transition-transform duration-300 group-hover:translate-x-1">{item.label}</span>
+                <ArrowUpRight className="size-5 text-white/55 transition-colors group-hover:text-white" aria-hidden="true" />
               </button>
             ))}
           </nav>
+          <a
+            href="#contact"
+            onClick={() => setMenuOpen(false)}
+            className="flex min-h-12 shrink-0 items-center justify-center border border-white bg-white px-6 font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-colors hover:bg-[#e8e8e4]"
+          >
+            Demo starten
+          </a>
         </div>
       )}
 

@@ -1109,13 +1109,14 @@ button {
   }
 
   .signal-device-stage {
-    top: calc(68% - 1.5rem);
+    top: auto;
     right: 50%;
-    transform: translate(50%, -50%);
+    bottom: 4rem;
+    transform: translateX(50%);
   }
 
   .signal-phone {
-    width: min(65vw, 16rem);
+    width: min(74vw, 18rem, calc(50svh - 10rem));
     border-radius: 2.2rem;
   }
 
@@ -1299,7 +1300,7 @@ button {
   }
 
   .signal-phone {
-    width: 62vw;
+    width: min(62vw, calc(50svh - 10rem));
   }
 
   .signal-screen {

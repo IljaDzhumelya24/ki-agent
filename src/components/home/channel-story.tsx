@@ -162,7 +162,7 @@ export function ChannelStory() {
         .to(screens[0], { autoAlpha: 0, y: -26, duration: 0.22 }, 0.9)
         .fromTo(chapters[1], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.37, ease: "power3.out" }, 1.08)
         .fromTo(screens[1], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.38, ease: "power3.out" }, 1.08)
-        .to(phone, { rotationY: 0, rotationZ: 0, y: -14, scale: 1.06, duration: 0.58, ease: "power2.inOut" }, 1.02)
+        .to(phone, { rotationY: 0, rotationZ: 0, y: desktop ? -14 : 0, scale: desktop ? 1.06 : 0.96, duration: 0.58, ease: "power2.inOut" }, 1.02)
         .to(chapters[1], { autoAlpha: 0, x: -70, duration: 0.24, ease: "power2.in" }, 1.93)
         .to(screens[1], { autoAlpha: 0, y: -26, duration: 0.22 }, 2.28)
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
@@ -170,8 +170,8 @@ export function ChannelStory() {
         .to(phone, {
           rotationY: 9,
           rotationZ: -3,
-          y: desktop ? -25 : () => Math.max(-55, Math.min(55, (750 - scene.offsetHeight) * 0.5)),
-          scale: 1.02,
+          y: desktop ? -25 : 0,
+          scale: desktop ? 1.02 : 1,
           duration: 0.62,
           ease: "power2.inOut",
         }, 2.08)
@@ -218,7 +218,7 @@ export function ChannelStory() {
         </svg>
         <svg className="signal-trace signal-trace--mobile" viewBox="0 0 390 844" preserveAspectRatio="none" aria-hidden="true">
           <defs><clipPath id="signal-trace-mobile-clip"><rect className="signal-trace-reveal" data-full-height="844" x="0" y="0" width="390" height="0" /></clipPath></defs>
-          <path className="signal-trace-path" clipPath="url(#signal-trace-mobile-clip)" d="M195 0 C195 80 380 70 380 160 L380 345 C380 390 280 405 195 420" />
+          <path className="signal-trace-path" clipPath="url(#signal-trace-mobile-clip)" d="M380 0 L380 345 C380 390 280 405 195 420" />
         </svg>
         <div className="signal-light-wipe" aria-hidden="true" />
         <svg className="signal-field" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
