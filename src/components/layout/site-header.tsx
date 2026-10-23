@@ -176,38 +176,38 @@ export function SiteHeader() {
           role="dialog"
           aria-modal="true"
           aria-label="Hauptnavigation"
-          className="fixed inset-0 z-[100] isolate flex h-dvh flex-col overflow-y-auto overscroll-contain bg-black px-6 pb-6 pt-4 text-white"
+          className="fixed inset-0 z-[100] isolate flex h-dvh flex-col overflow-y-auto overscroll-contain bg-[var(--paper)] px-6 pb-8 pt-4 text-[#0b0c0c]"
         >
           <div className="flex h-10 shrink-0 items-center justify-between">
-            <span className="display-type text-[1.7rem] font-semibold leading-none tracking-[-0.075em]">PLACEHOLDER/AI</span>
+            <span className="display-type text-[1.35rem] font-semibold leading-none tracking-[-0.075em]">PLACEHOLDER/AI</span>
             <button
               type="button"
               autoFocus
               onClick={closeMenu}
               aria-label="Menü schließen"
-              className="grid size-10 place-items-center border border-white bg-white text-black transition-colors hover:bg-black hover:text-white"
+              className="grid size-10 place-items-center border border-black bg-black text-white transition-colors hover:bg-white hover:text-black"
             >
               <X className="size-4" aria-hidden="true" />
             </button>
           </div>
-          <nav className="flex flex-1 flex-col justify-center py-10" aria-label="Mobile Hauptnavigation">
+          <nav className="mt-12 mb-8 grid min-h-56 flex-1 grid-rows-4" aria-label="Mobile Hauptnavigation">
             {homeContent.navigation.map((item) => (
               <button
                 type="button"
                 key={item.href}
                 onClick={() => announcePlanned(item.label)}
-                className="group flex w-full items-center justify-between border-t border-white/20 py-5 text-left last:border-b"
+                className="group flex w-full items-center justify-between border-t border-black/20 py-4 text-left last:border-b last:border-black/20"
                 aria-label={`${item.label} – in Vorbereitung`}
               >
-                <span className="display-type text-[clamp(2.15rem,9vw,3.6rem)] leading-none tracking-[-0.055em] transition-transform duration-300 group-hover:translate-x-1">{item.label}</span>
-                <ArrowUpRight className="size-5 text-white/55 transition-colors group-hover:text-white" aria-hidden="true" />
+                <span className="display-type text-[clamp(2.6rem,10.5vw,4.5rem)] leading-none tracking-[-0.065em] transition-transform duration-300 group-hover:translate-x-1">{item.label}</span>
+                <ArrowUpRight className="size-5 text-black/45 transition-colors group-hover:text-black" aria-hidden="true" />
               </button>
             ))}
           </nav>
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="flex min-h-12 shrink-0 items-center justify-center border border-white bg-white px-6 font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-black transition-colors hover:bg-[#e8e8e4]"
+            className="mb-12 flex min-h-12 shrink-0 items-center justify-center border border-black bg-black px-6 font-mono text-[0.72rem] font-bold uppercase tracking-[0.07em] text-white transition-colors hover:bg-[#282b2b]"
           >
             Demo starten
           </a>
