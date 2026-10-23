@@ -167,7 +167,14 @@ export function ChannelStory() {
         .to(screens[1], { autoAlpha: 0, y: -26, duration: 0.22 }, 2.28)
         .fromTo(chapters[2], { autoAlpha: 0, x: 70, y: 0 }, { autoAlpha: 1, x: 0, duration: 0.38, ease: "power3.out" }, 2.31)
         .fromTo(screens[2], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.31)
-        .to(phone, { rotationY: 9, rotationZ: -3, y: desktop ? -25 : 55, scale: 1.02, duration: 0.62, ease: "power2.inOut" }, 2.08)
+        .to(phone, {
+          rotationY: 9,
+          rotationZ: -3,
+          y: desktop ? -25 : () => Math.max(-55, Math.min(55, (750 - scene.offsetHeight) * 0.5)),
+          scale: 1.02,
+          duration: 0.62,
+          ease: "power2.inOut",
+        }, 2.08)
         .to({}, { duration: 1.15 });
 
       if (desktop) timeline.to(phone, { rotationY: 0, rotationZ: 0, y: 0, scale: 0.88, duration: 0.55, ease: "power2.inOut" }, 3.05);
