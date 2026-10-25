@@ -39,8 +39,6 @@ describe("homeContent", () => {
       "/branchen",
       "/preise",
     ]);
-    expect(homeContent.navigation.filter((item) => item.status === "planned").map((item) => item.label)).toEqual([
-      "Technologie",
-    ]);
+    expect(homeContent.navigation.every((item) => item.status === "live")).toBe(true);
   });
 });

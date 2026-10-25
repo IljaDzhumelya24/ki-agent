@@ -44,7 +44,6 @@ export const homeContent = {
   navigation: [
     { label: "Lösungen", href: "/loesungen", status: "live" },
     { label: "Branchen", href: "/branchen", status: "live" },
-    { label: "Technologie", href: "/technologie", status: "planned" },
     { label: "Preise", href: "/preise", status: "live" },
   ] satisfies NavigationItem[],
   hero: {

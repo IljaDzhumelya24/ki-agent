@@ -226,7 +226,7 @@ export function SiteHeader({ initialTheme = "dark", currentPage = "home" }: { in
               <X className="size-4" aria-hidden="true" />
             </button>
           </div>
-          <nav className="relative z-10 mb-6 mt-8 grid min-h-48 flex-1 grid-rows-4" aria-label="Mobile Hauptnavigation">
+          <nav className="relative z-10 mb-6 mt-8 grid min-h-48 flex-1 grid-rows-3" aria-label="Mobile Hauptnavigation">
             {homeContent.navigation.map((item) => {
               const className = "mobile-menu-item group flex w-full items-center text-left";
               const label = <span className="display-type text-[clamp(2.6rem,13vw,5.25rem)] leading-[0.9] tracking-[-0.075em] transition-[transform,color,opacity] duration-300 group-hover:translate-x-2 group-hover:text-white/60 group-active:opacity-55">{item.label}</span>;

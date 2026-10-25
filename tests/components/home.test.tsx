@@ -18,13 +18,13 @@ describe("SiteHeader", () => {
     expect(screen.getByText("PLACEHOLDER/AI")).toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Lösungen" })).toHaveAttribute("href", "/loesungen");
-    expect(screen.getByRole("button", { name: "Technologie – in Vorbereitung" })).toBeInTheDocument();
+    expect(screen.queryByText("Technologie")).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Menü öffnen" }));
 
     const dialog = screen.getByRole("dialog", { name: "Hauptnavigation" });
     expect(dialog).toBeInTheDocument();
-    expect(within(dialog).getAllByRole("button", { name: /in Vorbereitung/i })).toHaveLength(1);
+    expect(within(dialog).queryByRole("button", { name: /in Vorbereitung/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Über uns – in Vorbereitung" })).not.toBeInTheDocument();
     expect(within(dialog).getByRole("link", { name: "Lösungen" })).toHaveAttribute("href", "/loesungen");
 
